@@ -1,0 +1,281 @@
+version: '3'
+services:
+  zookeeperx:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeperx
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - secom-net
+
+  brokerx:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: brokerx
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeperx
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeperx:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://brokerx:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - secom-net
+
+#  broker:
+#    image: confluentinc/cp-kafka:7.0.1
+#    container_name: brokerx
+#    ports:
+#      - "9092:9092"
+#    depends_on:
+#      - zookeeper1
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper1:2181'
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+#      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+
+  zipkin1:
+    image: openzipkin/zipkin
+    container_name: zipkin1
+    ports:
+      - "9411:9411"
+    environment:
+      - QUERY_PORT=9411
+      - STORAGE_TYPE=mem
+      - ZIPKIN_BASE_URL=http://localhost:9411
+    networks:
+      - secom-net
+  ## Keycloak Config with Mysql database
+#  keycloak-mysqlx:
+#    container_name: keycloak-mysqlx
+#    image: mysql:5.7
+#    volumes:
+#      - ./mysql_keycloak_datax:/var/lib/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: keycloak
+#      MYSQL_USER: keycloak
+#      MYSQL_PASSWORD: password
+#    networks:
+#      - secom-net
+#
+#  keycloakx:
+#    container_name: keycloakx
+#    image: quay.io/keycloak/keycloak:18.0.0
+#    command: [ "start-dev", "--import-realm" ]
+#    environment:
+#      DB_VENDOR: MYSQL
+#      DB_ADDR: mysql
+#      DB_DATABASE: keycloak
+#      DB_USER: keycloak
+#      DB_PASSWORD: password
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./realms/:/opt/keycloak/data/import/
+#    depends_on:
+#      - keycloak-mysqlx
+#    networks:
+#      - secom-net
+
+
+  discovery-serverx:
+    image: microservices-livorno_secom/discovery-server:latest
+    container_name: discovery-serverx
+    ports:
+      - "8888:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - zipkin1
+    networks:
+      - secom-net
+  apigateway1:
+    image: microservices-livorno_secom/api-gateway:latest
+    container_name: apigateway1
+    ports:
+      - "8989:8989"
+    expose:
+      - "8989"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+#      - LOGGING_LEVEL_ROOT=INFO
+#      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_GATEWAY_ROUTE_ROUTEDEFINITIONROUTELOCATOR=INFO
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SECOM_CLIENT_CLIENT_ID=SECOM-Client
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SECOM_CLIENT_CLIENT_SECRET=79Iyu6tDk5b7EE0rYWQKEZo5hNljZSd6
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SECOM_CLIENT_SCOPE=openid, profile, roles, Owner_ID
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SECOM_CLIENT_AUTHORIZATION_GRANT_TYPE=authorization_code
+#      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SECOM_CLIENT_REDIRECT_URI=http://api-gatewayx:8988/login/oauth2/code/gateway
+#      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SECOM_CLIENT_ISSUER_URI=http://keycloakx:8181/realms/SECOM
+    depends_on:
+      - zipkin1
+#      - keycloakx
+    networks:
+      - secom-net
+  websocket-service:
+    container_name: websocket-service
+    image: microservices-livorno_secom/web_sockets:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+      - keygenerator-service
+      - zipkin1
+    ports:
+      - "8909:8909"
+    networks:
+      - secom-net
+
+  keygenerator-service:
+    container_name: keygenerator-service
+    image: microservices-livorno_secom/key_exchange_protocol:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+      - zipkin1
+    ports:
+      - "8906:8906"
+    networks:
+      - secom-net
+  EncSym-service:
+    container_name: EncSym-service
+    image: microservices-livorno_secom/enc_symmetric:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+    ports:
+      - "8903:8903"
+    networks:
+      - secom-net
+  DecSym-service:
+    container_name: DecSym-service
+    image: microservices-livorno_secom/dec_symmetric:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+    ports:
+      - "8901:8901"
+    networks:
+      - secom-net
+  EncAsym-service:
+    container_name: EncAsym-service
+    image: microservices-livorno_secom/encryption_key:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+    ports:
+      - "8904:8904"
+    networks:
+      - secom-net
+  DecAsym-service:
+    container_name: DecAsym-service
+    image: microservices-livorno_secom/decryption_key:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+    ports:
+      - "8902:8902"
+    networks:
+      - secom-net
+  Shore-service:
+    container_name: Shore-service
+    image: microservices-livorno_secom/ship-a:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+    ports:
+      - "8908:8908"
+    networks:
+      - secom-net
+  Ship-service:
+    container_name: Ship-service
+    image: microservices-livorno_secom/shore-control:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-serverx
+      - apigateway1
+    ports:
+      - "8907:8907"
+    networks:
+      - secom-net
+#  keycloak-mysql:
+#    container_name: keycloak-mysql
+#    image: mysql:5.7
+#    volumes:
+#      - ./mysql_keycloak_data:/var/lib/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: keycloak
+#      MYSQL_USER: keycloak
+#      MYSQL_PASSWORD: password
+#
+#  keycloak:
+#    container_name: keycloak
+#    image: quay.io/keycloak/keycloak:18.0.0
+#    command: [ "start-dev", "--import-realm" ]
+#    environment:
+#      DB_VENDOR: MYSQL
+#      DB_ADDR: mysql
+#      DB_DATABASE: keycloak
+#      DB_USER: keycloak
+#      DB_PASSWORD: password
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./realms/:/opt/keycloak/data/import/
+#    depends_on:
+#      - keycloak-mysql
+#  cache:
+#    image: redis:6.2-alpine
+#    restart: always
+#    ports:
+#      - '6379:6379'
+#    command: redis-server --save 20 1 --loglevel warning --requirepass root@123
+#    volumes:
+#      - cache:/data
+  redis-service:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6377:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass root@123
+    volumes:
+      - cache:/data
+    networks:
+      - secom-net
+volumes:
+    cache:
+      driver: local
+networks:
+  secom-net:
+    driver: bridge
+

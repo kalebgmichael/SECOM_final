@@ -1,0 +1,3 @@
+config/SecurityConfig.class
+com/productcnit/apigateway/controller/HomeController.class
+com/productcnit/apigateway/ApiGatewayApplication.class
