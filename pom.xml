@@ -75,7 +75,7 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
                         <image>
-                            <name>microservices-livorno_secom1/${project.artifactId}</name>
+                            <name>microservices-livorno_secom2/${project.artifactId}</name>
                             <publish>false</publish>
                             <env>
                                 <BP_JVM_BASE_IMAGE>eclipse-temurin:17.0.4.1_1-jre</BP_JVM_BASE_IMAGE>

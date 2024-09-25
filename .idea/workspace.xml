@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/file.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/file.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;kalebgmichael&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/kalebgmichael/SECOM_final.git&quot;,
+    &quot;accountId&quot;: &quot;5621000c-c345-4fc4-a4ff-bc7f5aa04cd4&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2j0bdqmTu7z4NeihRkSVk8s2r0A" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ApiGatewayApplication.executor": "Debug",
+    "Application.DecSymApplication.executor": "Debug",
+    "Application.DecryptionKeyApplication.executor": "Debug",
+    "Application.DiscoveryServerApplication.executor": "Debug",
+    "Application.EncSymApplication.executor": "Debug",
+    "Application.EncryptionKey.executor": "Debug",
+    "Application.KeyExchangeProtocolApplication.executor": "Debug",
+    "Application.ShipA_Application.executor": "Debug",
+    "Application.Shore_control_Application.executor": "Debug",
+    "Application.WebSocketApplication.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Shore_control_Application">
+    <configuration name="EncryptionKey" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.EncryptionKey" />
+      <module name="encryption_key" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KeyExchangeProtocolApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.KeyExchangeProtocolApplication" />
+      <module name="key_exchange_protocol" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShipA_Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.ShipA_Application" />
+      <module name="ship-a" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Shore_control_Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.Shore_control_Application" />
+      <module name="shore-control" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.WebSocketApplication" />
+      <module name="web_sockets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="api-gateway" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="api-gateway" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.WebSocketApplication" />
+        <item itemvalue="Application.Shore_control_Application" />
+        <item itemvalue="Application.ShipA_Application" />
+        <item itemvalue="Application.KeyExchangeProtocolApplication" />
+        <item itemvalue="Application.EncryptionKey" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="" />
+      <created>1720527031310</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720527031310</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

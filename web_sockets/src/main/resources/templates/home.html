@@ -635,7 +635,7 @@ h2, p {
         const peerid = document.getElementById('peerid').value;
 
         // Construct the URL with parameters included in the query string
-        const url = `http://localhost:8080/api/socket/Encrypt?encryptedMessage=${encodeURIComponent(encryptedMessage)}&senderid=${encodeURIComponent(senderid)}&secretkey=${encodeURIComponent(secretkey)}&peerid=${encodeURIComponent(peerid)}`;
+        const url = `http://localhost:8989/api/socket/Encrypt?encryptedMessage=${encodeURIComponent(encryptedMessage)}&senderid=${encodeURIComponent(senderid)}&secretkey=${encodeURIComponent(secretkey)}&peerid=${encodeURIComponent(peerid)}`;
 
         // Make a GET request to the server
         fetch(url)
