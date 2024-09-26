@@ -167,7 +167,7 @@ public class WebSocketService {
         initFromStrings(privatekey);
         try
         {
-            WebClient webClient = WebClient.create("http://localhost:8083");
+            WebClient webClient = WebClient.create("http://ENCKEY-SERVICE");
 
             // Build the request
             WebClient.RequestHeadersSpec<?> requestSpec = webClient
@@ -422,7 +422,7 @@ public class WebSocketService {
         initFromStringsPublickey(PUBLIC_KEY_STRINGS);
         try
         {
-            WebClient webClient = WebClient.create("http://localhost:8083");
+            WebClient webClient = WebClient.create("http://ENCKEY-SERVICE:8083");
 
             // Build the request
             WebClient.RequestHeadersSpec<?> requestSpec = webClient

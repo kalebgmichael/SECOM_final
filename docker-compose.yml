@@ -21,17 +21,16 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-#
-#
-#  zipkin:
-#    image: openzipkin/zipkin
-#    container_name: zipkin
-#    ports:
-#      - "9411:9411"
-#    environment:
-#      - QUERY_PORT=9411
-#      - STORAGE_TYPE=mem
-#      - ZIPKIN_BASE_URL=http://localhost:9411
+##Zipkin Configuration
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    environment:
+      - QUERY_PORT=9411
+      - STORAGE_TYPE=mem
+      - ZIPKIN_BASE_URL=http://localhost:9411
 
   ## Keycloak Config with Mysql database
   keycloak-mysql:
@@ -63,7 +62,9 @@ services:
       - ./realms/:/opt/keycloak/data/import/
     depends_on:
       - keycloak-mysql
+## redis-service configuration
   redis-service:
+    container_name: redis-service
     image: redis:6.2-alpine
     restart: always
     ports:
@@ -72,17 +73,17 @@ services:
     volumes:
       - cache:/data
 
-
-#  discovery-server:
-#      image: microservices-livorno_secom/discovery-server:latest
-#      container_name: discovery-server
-#      ports:
-#        - "8888:8761"
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - zipkin
-
+## discovery-server configuration
+  discovery-server:
+      build: ./discovery-server
+      container_name: discovery-server
+      ports:
+        - "8761:8761"
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - zipkin
+#$ api-gateway configuration
   api-gateway:
       build: ./api-gateway
       container_name: api-gateway
@@ -95,91 +96,100 @@ services:
         - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
       depends_on:
         - keycloak
-
-#  websocket-service:
-#      container_name: websocket-service
-#      image: microservices-livorno_secom/web_sockets:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#        - keygenerator-service
-#        - zipkin
-#      ports:
-#        - "8909:8909"
-#
-#  keygenerator-service:
-#      container_name: keygenerator-service
-#      image: microservices-livorno_secom/key_exchange_protocol:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#        - zipkin
-#      ports:
-#        - "8906:8906"
-#  EncSym-service:
-#      container_name: EncSym-service
-#      image: microservices-livorno_secom/enc_symmetric:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#      ports:
-#        - "8903:8903"
-#  DecSym-service:
-#      container_name: DecSym-service
-#      image: microservices-livorno_secom/dec_symmetric:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#      ports:
-#        - "8901:8901"
-#  EncAsym-service:
-#      container_name: EncAsym-service
-#      image: microservices-livorno_secom/encryption_key:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#      ports:
-#        - "8904:8904"
-#  DecAsym-service:
-#      container_name: DecAsym-service
-#      image: microservices-livorno_secom/decryption_key:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#      ports:
-#        - "8902:8902"
-#  Shore-service:
-#      container_name: Shore-service
-#      image: microservices-livorno_secom/ship-a:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#      ports:
-#        - "8908:8908"
-#  Ship-service:
-#      container_name: Ship-service
-#      image: microservices-livorno_secom/shore-control:latest
-#      environment:
-#        - SPRING_PROFILES_ACTIVE=docker
-#      depends_on:
-#        - discovery-server
-#        - api-gateway
-#      ports:
-#        - "8907:8907"
+        - discovery-server
+## websocket-service configuration
+  websocket-service:
+      build: ./web_sockets
+      container_name: websocket-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+        - REDIS_PASSWORD=root@123
+      depends_on:
+        - discovery-server
+        - api-gateway
+        - keygenerator-service
+        - zipkin
+      ports:
+        - "8909:8909"
+## keygenerator-service configuration
+  keygenerator-service:
+      build: ./key_exchange_protocol
+      container_name: keygenerator-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+        - REDIS_PASSWORD=root@123
+      depends_on:
+        - discovery-server
+        - api-gateway
+        - zipkin
+      ports:
+        - "8906:8906"
+## Symmetric encrytpion configuration
+  enc-sym-service:
+      build: ./enc_symmetric
+      container_name: EncSym-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - discovery-server
+        - api-gateway
+      ports:
+        - "8903:8903"
+## Symmetric Decrytpion configuration
+  dec-sym-service:
+      build: ./dec_symmetric
+      container_name: DecSym-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - discovery-server
+        - api-gateway
+      ports:
+        - "8901:8901"
+## Asymmetric encrytpion service
+  enc-asym-service:
+      build: ./encryption_key
+      container_name: EncAsym-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - discovery-server
+        - api-gateway
+      ports:
+        - "8904:8904"
+## Asymmetric decryption
+  dec-asym-service:
+      build: ./decryption_key
+      container_name: DecAsym-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - discovery-server
+        - api-gateway
+      ports:
+        - "8902:8902"
+## shore-service configuration
+  shore-service:
+      build: ./shore-control
+      container_name: Shore-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - discovery-server
+        - api-gateway
+      ports:
+        - "8908:8908"
+## ship-service configuration
+  ship-service:
+      build: ./ship-a
+      container_name: Ship-service
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+      depends_on:
+        - discovery-server
+        - api-gateway
+      ports:
+        - "8907:8907"
 volumes:
   cache:
     driver: local

@@ -99,7 +99,7 @@ public class DecSymController {
         EncKeyResponse[] sharedkeys = encKeyRepository.findByOwnerAndPairId("00001", "00002").toArray(new EncKeyResponse[0]);
         EncKeyResponse[] sharedkeys3 = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
         EncKeyResponse[] sharekeys2= encKeyRepository.findAll1().toArray(new EncKeyResponse[0]);
-        System.out.println("this is shared keys"+sharekeys2[2].getEnc_Key());
+        System.out.println("this is shared keys"+sharekeys2[1].getEnc_Key());
         String enc_sharedkey= sharedkeys[0].getEnc_Key();
 //        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8084/get_enc_sig_verif")
 //                .queryParam("encryptedmessage", URLEncoder.encode(enc_sharedkey, StandardCharsets.UTF_8))
