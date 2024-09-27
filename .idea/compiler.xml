@@ -7,18 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="discovery-server" />
-        <module name="enc_symmetric" />
-        <module name="web_sockets" />
-        <module name="key_exchange_protocol" />
-        <module name="api-gateway" />
-        <module name="ship-a" />
-        <module name="encryption_key" />
-        <module name="dec_symmetric" />
-        <module name="decryption_key" />
-        <module name="shore-control" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-gateway" target="17" />
+      <module name="dec_symmetric" target="17" />
+      <module name="decryption_key" target="17" />
+      <module name="discovery-server" target="17" />
+      <module name="enc_symmetric" target="17" />
+      <module name="encryption_key" target="17" />
+      <module name="key_exchange_protocol" target="17" />
+      <module name="MUTUAL-TLS" target="17" />
+      <module name="ship-a" target="17" />
+      <module name="shore-control" target="17" />
+      <module name="web_sockets" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
