@@ -78,7 +78,7 @@ public class ShoreCont_Service {
         WebClient webClient1 = webClientBuilder.build();
         WebClient webClient2= WebClient.create();
 
-        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8085/Encrypt")
+        URI uri = UriComponentsBuilder.fromHttpUrl("http://ENCSYM-SERVICE/api/encsym/Encrypt")
                 .queryParam("message", URLEncoder.encode(Message, StandardCharsets.UTF_8))
 //                .queryParam("message",Message)
                 .queryParam("secretkey", URLEncoder.encode(secretkey, StandardCharsets.UTF_8))

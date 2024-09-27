@@ -203,3 +203,4 @@ http://apigateway1:8988/gateway //http://apigateway1:8988/login/oauth2/code/gate
 http://apigateway1:8988/gateway //http://apigateway1:8988/login/oauth2/code/gateway
 
 http://localhost:8988/gateway//http://localhost:8988/login/oauth2/code/gateway
+
