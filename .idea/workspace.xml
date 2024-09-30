@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="" />
+    <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/privatechat.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/privatechat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,14 +39,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev2&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cnit/Desktop/SECOM/SECOM_final/realms&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev3",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final/realms"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/realms" />

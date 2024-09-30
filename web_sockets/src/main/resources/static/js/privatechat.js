@@ -1,4 +1,4 @@
-         var user1= "00002";
+var user1= "00002";
          var user2= "0001";
    stompClient.subscribe('/user1/specific/private-chat', function (message) {
             console.log("Subscribed to: " + message.headers.destination);
@@ -17,17 +17,6 @@
             // Extract private key from the received message
             const privateKey = JSON.parse(message.body).text;
             });
-
-<!--     stompClient.subscribe('/topic/public-key', function (message) {-->
-<!--            console.log("Subscribed to: " + message.headers.destination);-->
-<!--            console.log("User: " + message.headers.user); // Assuming 'user' is a header sent by the server-->
-<!--            console.log("Message from topic: " + message);-->
-<!--            showMessage_private('Message received: ' + message.body);-->
-<!--            // Extract private key from the received message-->
-<!--            const privateKey = JSON.parse(message.body).text;-->
-<!--            });-->
-
-
 
 
         // Send a message
