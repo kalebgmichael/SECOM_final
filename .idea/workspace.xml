@@ -4,17 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
     <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/Css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" afterDir="false" />
     </list>
-
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -42,10 +44,51 @@
       </method>
     </configuration>
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;kalebgmichael&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/kalebgmichael/SECOM_final.git&quot;,
+    &quot;accountId&quot;: &quot;5621000c-c345-4fc4-a4ff-bc7f5aa04cd4&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2mn8Pv1pPmB75KK8kEqYzItr7gP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev5",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final/realms"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/realms" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="" />
+      <created>1727700961007</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727700961007</updated>
+    </task>
     <servers />
   </component>
-
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
