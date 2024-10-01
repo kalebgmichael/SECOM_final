@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 50px; /* Adjusted to avoid overlap with the profile */
+}
+
+.user-profile {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    z-index: 1000; /* Ensures it's above other elements */
+}
+.textarea-large {
+    height: 2000px; /* Adjusted height */
+    width: 100%; /* Full container width */
+}
+
+
+     .message-box {
+            border: 2px solid #ccc;
+            background-color: #fff;
+            padding: 10px;
+            width: 80%;
+            max-width: 1000px;
+            height: 300px; /* Increased height */
+            overflow-y: auto;
+            margin-top: 20px;
+            z-index: 1000;
+        }
+
+h2, p {
+    margin: 5px 0;
+}
+
+.form-section {
+    width: 50%;
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+}
