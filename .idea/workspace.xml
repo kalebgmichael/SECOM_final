@@ -6,18 +6,30 @@
   <component name="ChangeListManager">
     <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/controller/DecSymController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/controller/DecSymController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/repository/EncKeyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/repository/EncKeyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/controller/DecSymController.class" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/controller/DecSymController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/dec_symmetric-1.0-SNAPSHOT.jar.original" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/decryption_key/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/decryption_key-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/target/discovery-server-1.0-SNAPSHOT.jar.original" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/enc_symmetric-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/encryption_key-1.0-SNAPSHOT.jar.original" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/controller/DataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/controller/DataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/service/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/service/WebSocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/controller/DataController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/controller/DataController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/service/WebSocketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/service/WebSocketService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/key_exchange_protocol-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/ship-a-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/shore-control/target/shore-control-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +73,7 @@
     "Application.Shore_control_Application.executor": "Debug",
     "Application.WebSocketApplication.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev5",
+    "git-widget-placeholder": "dev6",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final/realms"
   }
