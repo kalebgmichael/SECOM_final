@@ -308,22 +308,6 @@ public class WebSocketService {
         String SecretKey = secretkey;
         WebClient webClient2 = webClientBuilder.build();
         WebClient webClient1= WebClient.create();
-
-//        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8085/Encrypt")
-//                .queryParam("message", URLEncoder.encode(Message, StandardCharsets.UTF_8))
-////                .queryParam("message",Message)
-//                .queryParam("secretkey", URLEncoder.encode(secretkey, StandardCharsets.UTF_8))
-//                .queryParam("sendid", URLEncoder.encode(senderid, StandardCharsets.UTF_8))
-//                .queryParam("peerid", URLEncoder.encode(peerid, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        EncMessage response = webClient2.get()
-//                .uri(uri)
-//                .retrieve()
-//                .bodyToMono(EncMessage.class)
-//                .block();
-
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         EncMessage response = webClient2.get()
                 .uri(builder -> {
@@ -375,21 +359,6 @@ public class WebSocketService {
         String SecretKey = secretkey;
         WebClient webClient2 = webClientBuilder.build();
         WebClient webClient1= WebClient.create();
-
-//        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8686/GetDecrypt")
-//                .queryParam("message", URLEncoder.encode(Message, StandardCharsets.UTF_8))
-////                .queryParam("message",Message)
-//                .queryParam("secretkey", URLEncoder.encode(secretkey, StandardCharsets.UTF_8))
-//                .queryParam("sendid", URLEncoder.encode(senderid, StandardCharsets.UTF_8))
-//                .queryParam("peerid", URLEncoder.encode(peerid, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        DecMessage response = webClient2.get()
-//                .uri(uri)
-//                .retrieve()
-//                .bodyToMono(DecMessage.class)
-//                .block();
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         DecMessage response = webClient2.get()
                 .uri(builder -> {

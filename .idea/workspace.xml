@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/Css/home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/web_sockets-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,8 +68,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ApiGatewayApplication.executor": "Debug",
+    "Application.DecSymApplication.executor": "Debug",
+    "Application.DecryptionKeyApplication.executor": "Debug",
+    "Application.DiscoveryServerApplication.executor": "Debug",
+    "Application.EncSymApplication.executor": "Debug",
+    "Application.EncryptionKey.executor": "Debug",
+    "Application.KeyExchangeProtocolApplication.executor": "Debug",
+    "Application.ShipA_Application.executor": "Debug",
+    "Application.Shore_control_Application.executor": "Debug",
+    "Application.WebSocketApplication.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev5",
+    "git-widget-placeholder": "dev7",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final/realms"
   }

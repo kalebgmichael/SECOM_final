@@ -40,8 +40,16 @@ public class EncKeyRepository {
         // implement custom logic to filter by both Owner_Id and Pair_Id.
         // Since Redis does not natively support querying by multiple fields in a hash, you may need to retrieve all EncKey objects for the given Owner_Id and then filter them in Java.
         List<EncKeyResponse> allKeys = findAll1();
+        // Output all keys and the inputs for debugging purposes
+        System.out.println("This is list of keys: " + allKeys);
+        System.out.println("Owner_Id: '" + Owner_Id + "', Pair_Id: '" + Pair_Id + "'");
+
+        // Trim the inputs to remove trailing/leading spaces
+        String trimmedOwnerId = Owner_Id.trim();
+        String trimmedPairId = Pair_Id.trim();
+        System.out.println("trimmedOwnerId: '" + trimmedOwnerId + "', trimmedPairId: '" + trimmedPairId + "'");
         return allKeys.stream()
-                .filter(encKey -> encKey.getOwner_Id().equals(Owner_Id) && encKey.getPair_Id().equals(Pair_Id))
+                .filter(encKey -> encKey.getOwner_Id().equals(trimmedOwnerId) && encKey.getPair_Id().equals(trimmedPairId))
                 .collect(Collectors.toList());
     }
 
