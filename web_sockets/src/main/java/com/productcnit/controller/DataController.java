@@ -358,25 +358,6 @@ public class DataController {
         System.out.println("this is kafkasendid"+kafkasendid);
         String SecretKey = secretkey;
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-//        WebClient webClient1 =webClientBuilder.build();
-//        String response= webClient1.get()
-//                .uri("http://localhost:8085/sharedkey_pair"+"/"+peerid)
-//                .headers(httpHeaders -> httpHeaders.setBearerAuth(jwt.getTokenValue()))
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
-//
-//        if(response != "")
-//        {
-//            System.out.println("we have the shared key");
-//            webSocketService.getEncrypt(encryptedMessage,senderid,peerid,secretkey);
-//        }
-//        else
-//        {
-//            System.out.println("we have to get the shared key first");
-//            get_pub_own_ca(peerid,authentication);
-//        }
-
          return webSocketService.getEncrypt(encryptedMessage,senderid,peerid,secretkey,authentication);
 
     }
