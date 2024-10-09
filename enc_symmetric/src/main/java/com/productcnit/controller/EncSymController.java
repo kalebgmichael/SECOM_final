@@ -43,7 +43,7 @@ public class EncSymController {
     }
 
     @GetMapping("/Encrypt")
-    public EncMessage Encrypt(@RequestParam("message") String message, @RequestParam("secretkey") String secretkey,
+    public EncMessage Encrypt(@RequestParam("message") String message,
                               @RequestParam("sendid") String sendid, @RequestParam("peerid") String peerid, Authentication authentication)
     {
 
@@ -55,27 +55,14 @@ public class EncSymController {
             WebClient webClient2= WebClient.create();
             String message1 = URLDecoder.decode(message, StandardCharsets.UTF_8);
 //        String message1 = message;
-            String secretkey1 = URLDecoder.decode(secretkey, StandardCharsets.UTF_8);
             String sendid1 = URLDecoder.decode(sendid, StandardCharsets.UTF_8);
             String peerid1 = URLDecoder.decode(peerid, StandardCharsets.UTF_8);
-
-            System.out.println("secretkey is " + secretkey1);
             System.out.println("message1 in encryptsym is " + message1);
             System.out.println("message in encryptsym is " + message);
 
             EncKeyResponse[] sharedkeys = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
             String enc_sharedkey= sharedkeys[0].getEnc_Key();
-//            URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8084/get_enc_sig_verif")
-//                    .queryParam("encryptedmessage", URLEncoder.encode(enc_sharedkey, StandardCharsets.UTF_8))
-//                    .build()
-//                    .toUri();
-//
-//            String response = webClient2.get()
-//                    .uri(uri)
-//                    .retrieve()
-//                    .bodyToMono(String.class)
-//                    .block();
-        String response = webClient1.get()
+            String response = webClient1.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
                             .scheme("http")
@@ -89,9 +76,6 @@ public class EncSymController {
                 .bodyToMono(String.class)
                 .block();
             System.out.println("decrypted sharedkey is"+response);
-//        String message2 = message1.replaceAll(
-//        "|\"$", "");
-            String SecretKey = secretkey1;
             encSymService.initFromStrings(response, "e3IYYJC2hxe24/EO");
             String encryptedmessage= encSymService.encrypt(message1);
             System.out.println("encryptedmessage in encryptsym is " + encryptedmessage);

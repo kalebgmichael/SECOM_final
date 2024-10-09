@@ -72,18 +72,15 @@ public class DecSymController {
         return decMessage;
     }
     @GetMapping("/GetDecrypt")
-    public DecMessage GetDecrypt(@RequestParam("message") String message, @RequestParam("secretkey") String secretkey,
+    public DecMessage GetDecrypt(@RequestParam("message") String message,
                                  @RequestParam("sendid") String sendid, @RequestParam("peerid") String peerid, Authentication authentication)
     {
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         WebClient webClient1 = webClientBuilder.build();
         String message1 = URLDecoder.decode(message, StandardCharsets.UTF_8);
 //        String message1 = message;
-        String secretkey1 = URLDecoder.decode(secretkey, StandardCharsets.UTF_8);
         String sendid1 = URLDecoder.decode(sendid, StandardCharsets.UTF_8);
         String peerid1 = URLDecoder.decode(peerid, StandardCharsets.UTF_8);
-
-        System.out.println("secretkey is " + secretkey1);
         System.out.println("message1 in encryptsym is " + message1);
         System.out.println("message in encryptsym is " + message);
         System.out.println("message in sendid1 is " + sendid1);
@@ -115,10 +112,6 @@ public class DecSymController {
                 .bodyToMono(String.class)
                 .block();
         System.out.println("decrypted sharedkey is"+response);
-//        String message2 = message1.replaceAll(
-//        "|\"$", "");
-        String SecretKey = secretkey1;
-//        String SecretKey = "9f7F8bM+5AS7kj/4a0A1kQ==";
         decSymService.initFromStrings(response, "e3IYYJC2hxe24/EO");
         String decryptedmessage= decSymService.decrypt(message1);
         System.out.println("dectryptedmessage in GetDncrypt is " + decryptedmessage);

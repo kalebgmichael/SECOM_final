@@ -5,13 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/images/SECOM.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/api-gateway-1.0-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/controller/DecSymController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/controller/DecSymController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/config/RedisConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/config/RedisConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/controller/DecSymController.class" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/controller/DecSymController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/src/main/java/com/productcnit/controller/DecryptionPrvController.java" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/src/main/java/com/productcnit/controller/DecryptionPrvController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/classes/com/productcnit/config/RedisConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/classes/com/productcnit/config/RedisConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decryption_key/target/classes/com/productcnit/controller/DecryptionPrvController.class" beforeDir="false" afterPath="$PROJECT_DIR$/decryption_key/target/classes/com/productcnit/controller/DecryptionPrvController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/controller/EncSymController.java" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/controller/EncSymController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/com/productcnit/config/RedisConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/com/productcnit/config/RedisConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/src/main/java/com/productcnit/controller/EncryptionPubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/src/main/java/com/productcnit/controller/EncryptionPubController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encryption_key/target/classes/com/productcnit/controller/EncryptionPubController.class" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/classes/com/productcnit/controller/EncryptionPubController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/Controller/KeyexchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/Controller/KeyexchangeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/Controller/KeyexchangeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/Controller/KeyexchangeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/config/RedisConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/config/RedisConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship-a/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ship-a/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/controller/DataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/controller/DataController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/service/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/service/WebSocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/static/Css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/Css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/controller/DataController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/controller/DataController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/service/WebSocketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/service/WebSocketService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/static/Css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/static/Css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/templates/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,15 +83,92 @@
     "Application.Shore_control_Application.executor": "Debug",
     "Application.WebSocketApplication.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev7",
+    "git-widget-placeholder": "dev9",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final/realms"
+    "last_opened_file_path": "/home/cnit/Desktop/SECOM/SECOM_final/web_sockets/src/main/resources/static/imgaes"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web_sockets/src/main/resources/static/imgaes" />
       <recent name="$PROJECT_DIR$/realms" />
     </key>
+  </component>
+  <component name="RunManager" selected="Application.WebSocketApplication">
+    <configuration name="EncryptionKey" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.EncryptionKey" />
+      <module name="encryption_key" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KeyExchangeProtocolApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.KeyExchangeProtocolApplication" />
+      <module name="key_exchange_protocol" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShipA_Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.ShipA_Application" />
+      <module name="ship-a" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Shore_control_Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.Shore_control_Application" />
+      <module name="shore-control" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.productcnit.WebSocketApplication" />
+      <module name="web_sockets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.productcnit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.WebSocketApplication" />
+        <item itemvalue="Application.EncryptionKey" />
+        <item itemvalue="Application.Shore_control_Application" />
+        <item itemvalue="Application.ShipA_Application" />
+        <item itemvalue="Application.KeyExchangeProtocolApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
