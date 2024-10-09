@@ -82,23 +82,23 @@ public class DecryptionPrvController {
         decryptionPrvService.initFromStringsPublickey();
         decryptionPrvService.initFromStrings();
         boolean response = decryptionPrvService.verifySignature(enc_mess_key,enc_sign_key);
-        System.out.println("the response is "+response);
+        System.out.println("get_enc_sig_verif_pubkey:This is the 13 the message:  response from singnature vefication of the symmetric key used to encrypt the first dh public key is "+response);
         if(response)
         {
             decryptionPrvService.initFromStringsPublickey();
             decryptionPrvService.initFromStrings();
             String decmessage= decryptionPrvService.decrypt(enc_mess_key);
-            System.out.println("decmessage in if stm"+decmessage);
+            System.out.println("get_enc_sig_verif_pubkey:decmessage of the symmetric key using private key of the reciever that sent the first public key"+decmessage);
             String SecretKey = decmessage;
             decryptionPrvService.initFromStrings_sym(SecretKey, "e3IYYJC2hxe24/EO");
             String decryptedmessage= decryptionPrvService.decrypt_sym(enc_pubkey);
-            System.out.println("dectryptedmessage in GetDncrypt is " + decryptedmessage);
+            System.out.println("get_enc_sig_verif_pubkey: dectryptedmessage of the DH key in GetDncrypt is " + decryptedmessage);
             String dh_enc_sig= decryptedmessage+"_.._"+ publickey;
             return dh_enc_sig;
         }
         else
         {
-            System.out.println("error in signature");
+            System.out.println("get_enc_sig_verif_pubkey:error in signature");
             decryptionPrvService.initFromStringsPublickey();
             decryptionPrvService.initFromStrings();
             String decmessage= decryptionPrvService.decrypt(enc_mess_key);

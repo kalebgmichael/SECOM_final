@@ -68,6 +68,7 @@ public class DataController {
 
     @GetMapping("/getkey_own_dh")
     public ResponseEntity<GenKeyPairResponse> getkey_own_dh(String Recid, String publickey, Authentication authentication) {
+        System.out.println("getkey_own_dh:This is the fifth message to retrive the DH keypairs");
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
@@ -75,20 +76,9 @@ public class DataController {
         WebClient webClient2 = webClientBuilder.build();
         WebClient webClient1= WebClient.create();
         GenKeyPairResponse secretMessage = webSocketService.getkeypair(authentication,Ownerid);
-
         String Ownpubkey_ca= webSocketService.getUser_ca();
+        System.out.println("getkey_own_dh:This is the 8th message to retrive the public key after retriving the DH keypair and preparing to send back to user who sent the publickey");
         String publickey_peer= publickey;
-//        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8083/getenc_sig_peer")
-//                .queryParam("message", URLEncoder.encode(secretMessage.getGen_public_Key(), StandardCharsets.UTF_8))
-//                .queryParam("publickey_peer", URLEncoder.encode(publickey_peer, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        String response = webClient2.get()
-//                .uri(uri)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
         String response = webClient2.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
@@ -104,7 +94,8 @@ public class DataController {
                 .bodyToMono(String.class)
                 .block();
 
-        System.out.println("this is the response form getenc_sig_peer"+response);
+        System.out.println("getkey_own_dh: this is the 10th message form getenc_sig_peer concatenation of symmetric key signed " +
+                "by private key of sender and encrypted by public key of peer togehter with the DH publci key encrypted with symmetric key"+response);
 
         Peer_PublicKeyMessageSend ResMessage= new Peer_PublicKeyMessageSend();
         ResMessage.setSenderId(secretMessage.getGen_Owner_Id());
@@ -123,26 +114,14 @@ public class DataController {
     public PublicKeyMessage rec_dh_pub_key(@RequestParam("encryptedmessage") String encryptedmessage,@RequestParam("publickey") String publickey,
                                  @RequestParam("sendid") String sendid,@RequestParam("peerid") String peerid,Authentication authentication)
     {
+         System.out.println("rec_dh_pub_key:This is the 12th message we have public key of the " +
+                 "message receiver of the initial message  and signature of the symmetric key used to ecnrypt the dh of the initial message receiver ");
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
         System.out.println("OwnerId"+Ownerid);
         WebClient webClient2 = webClientBuilder.build();
         WebClient webClient1= WebClient.create();
-
-//        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8084/get_enc_sig_verif_pubkey")
-//                .queryParam("encryptedmessage", URLEncoder.encode(encryptedmessage, StandardCharsets.UTF_8))
-//                .queryParam("publickey", URLEncoder.encode(publickey, StandardCharsets.UTF_8))
-//                .queryParam("sendid", URLEncoder.encode(sendid, StandardCharsets.UTF_8))
-//                .queryParam("peerid", URLEncoder.encode(peerid, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        String response = webClient2.get()
-//                .uri(uri)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
         String response = webClient2.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
@@ -162,23 +141,14 @@ public class DataController {
         String[] data= response.split("_.._");
         String dh_pub_key=data[0];
         String pub_key_ca=data[1];
-        System.out.println("dh_pub_key"+dh_pub_key);
-        System.out.println("pub_key_ca"+pub_key_ca);
-        System.out.println("decrypted sharedkey is"+response);
+        System.out.println("14th message:rec_dh_pub_key:dh_pub_key of the peer message reciever"+dh_pub_key);
+        System.out.println("rec_dh_pub_key:pub_key_ca of the peer "+pub_key_ca);
+        System.out.println("rec_dh_pub_key:decrypted key is"+response);
 
         GenKeyPairResponse secretMessage = webSocketService.getkeypair(authentication,Ownerid);
+        System.out.println("rec_dh_pub_key:This is the 14th message retrival of the DH key public key of the message owner to send back to peer to be signed by privatekey: " +
+                "encrypted by symmetric key: and again the symmetric key encrypted by public key of the peer which is pub_key_ca ");
         String publickey_peer= pub_key_ca;
-//        URI uri1 = UriComponentsBuilder.fromHttpUrl("http://localhost:8083/getenc_sig_peer")
-//                .queryParam("message", URLEncoder.encode(secretMessage.getGen_public_Key(), StandardCharsets.UTF_8))
-//                .queryParam("publickey_peer", URLEncoder.encode(publickey_peer, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        String response1 = webClient2.get()
-//                .uri(uri1)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
         String response1 = webClient2.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
@@ -193,7 +163,7 @@ public class DataController {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        System.out.println("this is the response form getenc_sig_peer"+response1);
+        System.out.println("rec_dh_pub_key: this is 15th message: symkey  encrypted with public key of the peer and signed by private key of the owener: concatenated with dh publc key of owner  encrypted by symm key  getenc_sig_peer"+response1);
 
         Peer_PublicKeyMessageSend ResMessage= new Peer_PublicKeyMessageSend();
         ResMessage.setSenderId(secretMessage.getGen_Owner_Id());
@@ -201,6 +171,7 @@ public class DataController {
         ResMessage.setCa_Pubkey(pub_key_ca);
         ResMessage.setRecId(sendid);
         webSocketService.SendPublicKey_ca_peer_rec(ResMessage);
+        System.out.println("this is the 16 th message concatendated message with dh to be decrypted sent to peer to topic public_key_ca_rec");
 
         PublicKeyMessage outMessage= new PublicKeyMessage();
         outMessage.setPublicKey(dh_pub_key);
@@ -213,25 +184,13 @@ public class DataController {
     public PublicKeyMessage rec_dh_pub_key_rec(@RequestParam("encryptedmessage") String encryptedmessage,
                                            @RequestParam("sendid") String sendid,@RequestParam("peerid") String peerid,Authentication authentication)
     {
+        System.out.println("This is the 21th message cocnatendated dh of owner to be sent for decryption by verifying signature");
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
         System.out.println("OwnerId"+Ownerid);
         WebClient webClient2 = webClientBuilder.build();
         WebClient webClient1= WebClient.create();
-//
-//        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8084/get_enc_sig_verif_pubkey_rec")
-//                .queryParam("encryptedmessage", URLEncoder.encode(encryptedmessage, StandardCharsets.UTF_8))
-//                .queryParam("sendid", URLEncoder.encode(sendid, StandardCharsets.UTF_8))
-//                .queryParam("peerid", URLEncoder.encode(peerid, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        String response = webClient2.get()
-//                .uri(uri)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
         String response = webClient2.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
@@ -247,7 +206,7 @@ public class DataController {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        System.out.println("decrypted sharedkey is"+response);
+        System.out.println("decrypted dh key is"+response);
         String kafkasendid= sendid;
         kafkasharedkeyTemplate.send("key-generated",kafkasendid);
         PublicKeyMessage outMessage= new PublicKeyMessage();
@@ -262,6 +221,7 @@ public class DataController {
 
     @GetMapping("/send_pub_own_ca")
     public String get_pub_own_ca(String Recid, Authentication authentication) {
+        System.out.println("get_pub_own_ca:This is Second message from get_pub_own_ca method to retrive initial sender public key");
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
@@ -346,19 +306,20 @@ public class DataController {
     @GetMapping("/Encrypt")
     @KafkaListener(topics = "key-generated", groupId = "group-id4")
     public EncMessageResponse GetEncrypt(Authentication authentication, @RequestParam(value= "encryptedMessage",required = false) String encryptedMessage,
-                                         @RequestParam(value="senderid",required = false) String senderid,
-                                         @RequestParam(value="secretkey",required = false) String secretkey,
                                          @RequestParam(value = "peerid",required = false) String peerid,
                                          @RequestParam(value = "kafkasendid",required = false) String kafkasendid)
     {
+        System.out.println("GetEncrypt:This is First message");
         get_pub_own_ca(peerid,authentication);
         System.out.println("message to be encrypted"+encryptedMessage);
 //        String encryptedMessage1 = URLDecoder.decode(encryptedMessage, StandardCharsets.UTF_8);
         System.out.println("message to be encrypted1"+encryptedMessage);
         System.out.println("this is kafkasendid"+kafkasendid);
-        String SecretKey = secretkey;
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-         return webSocketService.getEncrypt(encryptedMessage,senderid,peerid,secretkey,authentication);
+        Map<String, Object> claims = jwt.getClaims();
+        String Ownerid = (String) claims.get("Owner_ID");
+        System.out.println("OwnerId"+Ownerid);
+        return webSocketService.getEncrypt(encryptedMessage,Ownerid,peerid,authentication);
 
     }
 

@@ -197,6 +197,7 @@ public class WebSocketService {
 
     public GenKeyPairResponse getkeypair(Authentication authentication, String OwnerId)
     {
+        System.out.println("getkeypair:This is the 6th message to retrive the DH keypair form keyexchange microservice of the peer or the 14th message to retrive the DH keypair of the owner ");
             WebClient webClient = WebClient.create("http://KEYEX-SERVICE");
 
             Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
@@ -303,9 +304,8 @@ public class WebSocketService {
     }
 
     public EncMessageResponse getEncrypt(String Message,String senderid,
-                                 String peerid,String secretkey, Authentication authentication){
+                                 String peerid, Authentication authentication){
 
-        String SecretKey = secretkey;
         WebClient webClient2 = webClientBuilder.build();
         WebClient webClient1= WebClient.create();
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
@@ -316,7 +316,6 @@ public class WebSocketService {
                             .host("ENCSYM-SERVICE")
                             .path("/api/encsym/Encrypt")
                             .queryParam("message", URLEncoder.encode(Message, StandardCharsets.UTF_8))
-                            .queryParam("secretkey", URLEncoder.encode(secretkey, StandardCharsets.UTF_8))
                             .queryParam("sendid", URLEncoder.encode(senderid, StandardCharsets.UTF_8))
                             .queryParam("peerid", URLEncoder.encode(peerid, StandardCharsets.UTF_8));
                     return uriBuilder.build().toUri();
@@ -437,6 +436,7 @@ public class WebSocketService {
     public PublicKeyMessage SendPublicKey_ca(Own_PublicKeyMessageSend publicKeyMessage)
 
     {
+        System.out.println("This is third message to forward retrived public key to the peer");
         PublicKeyMessage outMessage= new PublicKeyMessage();
         outMessage.setPublicKey(publicKeyMessage.getEnc_Sig_Own_Pubkey());
         outMessage.setSenderId(publicKeyMessage.getSenderId());

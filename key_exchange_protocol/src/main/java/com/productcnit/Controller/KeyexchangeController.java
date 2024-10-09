@@ -355,6 +355,7 @@ public String getsecsharedkey(@RequestParam("SenderId") String SenderId,@Request
 
     @GetMapping("/Gengetkeypair/{Id}")
     public GenKeyPairResponse findGenkeypair(@PathVariable String Id) {
+        System.out.print("This is the 7th message to retrive the keypair based on ownerid of the one who has recieved public key of the peer");
         try {
             GenKeyPairResponse keys = generalKeyPairRepository.findKeypairbyId(Id);
             System.out.println("this is private " + keys.getGen_private_Key() + "this is public " + keys.getGen_public_Key());

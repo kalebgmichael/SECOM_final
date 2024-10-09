@@ -18,33 +18,33 @@
         <p>UserId: <span th:text="${userId}" id="userId" class="text-info"></span></p>
     </div>
 
-</div>
-
-    <div class="container">
     <div class="text-center">
-        <div class="text-center">
-            <h1 class="display-4">SECOM Input form</h1>
+        <h1 class="display-4">SECOM Input form</h1>
+
+        <!-- Encryption form -->
+        <div class="message-container">
             <form id="encryptionForm">
-                <input type="text" id="senderid" placeholder="Sender ID" class="form-control" required>
-                <input type="text" id="secretkey" placeholder="Secret Key" class="form-control" required>
                 <input type="text" id="peerid" placeholder="Peer ID" class="form-control" required>
                 <textarea id="encryptedMessage" class="form-control textarea-large" placeholder="Encrypted Message" required></textarea>
                 <button type="submit" class="btn btn-primary">Encrypt and Send</button>
             </form>
         </div>
-<!--        <h1 class="display-4">WebSocket Client</h1>-->
-<!--        <h1 class="welcome">Welcome, <span th:text="${username}" class="text-primary"></span>!</h1>-->
-<!--        <h1>This is your OwnerId <span th:text="${ownerId}" id="ownerId" class="text-info"></span></h1>-->
-<!--        <h1>This is your UserId <span th:text="${userId}" id="userId" class="text-info"></span></h1>-->
-        <div id="messages" class="message-box"></div>
-<!--        <div id="private-messages" class="message-box"></div>-->
-        <div id="Encrypted-messages" class="message-box"></div>
 
+        <!-- Larger Encrypted Messages container -->
+        <div id="Encrypted-messages" class="message-box large-message-box"></div>
+
+        <!-- Four side-by-side message boxes -->
+        <div class="message-container">
+            <div id="peers-publickey" class="message-box"></div>
+            <div id="DH-peers-encrypted" class="message-box"></div>
+            <div id="DH-owner-encrypted" class="message-box"></div>
+            <div id="messages" class="message-box"></div>
+        </div>
 
     </div>
 
-
 </div>
+
 
 <script src="/js/main.js"></script>
 </body>
