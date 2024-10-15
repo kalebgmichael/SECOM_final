@@ -226,11 +226,7 @@ public class WebSocketService {
     public String Sharedkey(String Recid, String SenderId, String publicKey, Authentication authentication) {
         WebClient webClient = WebClient.create("http://KEYEX-SERVICE");
         System.out.println("publickey"+publicKey);
-//        System.out.println("OwnerId"+OwnerId);
-//        System.out.println("Recid"+Recid);
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-//        System.out.println(jwt.getTokenValue());
-
         Map<String, Object> claims = jwt.getClaims();
         String OwnerId = (String) claims.get("Owner_ID");
         System.out.println("OwnerId"+OwnerId);
@@ -307,7 +303,6 @@ public class WebSocketService {
                                  String peerid, Authentication authentication){
 
         WebClient webClient2 = webClientBuilder.build();
-        WebClient webClient1= WebClient.create();
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         EncMessage response = webClient2.get()
                 .uri(builder -> {
@@ -324,7 +319,17 @@ public class WebSocketService {
                 .retrieve()
                 .bodyToMono(EncMessage.class)
                 .block();
-
+        // Handle the case where response is null
+        if (response == null) {
+            System.out.println("Failed to get encrypted message. Response is null.");
+            // Option 1: Return a default error response (you can customize this)
+            EncMessageResponse errorResponse = new EncMessageResponse();
+            errorResponse.setMessage("Error: Failed to encrypt message");
+            errorResponse.setSenderId(senderid);
+            errorResponse.setRecId(peerid);
+            errorResponse.setTime(new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date()));
+            return errorResponse;
+        }
         EncMessageResponse encMessage = new EncMessageResponse();
         encMessage.setMessage(response.getMessage());
         encMessage.setSenderId(response.getSenderId());
@@ -332,9 +337,7 @@ public class WebSocketService {
         encMessage.setTime(new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date()));
        //send encryptedmessage
         SendEncMessage(encMessage);
-
         return encMessage;
-
     }
 
     public DecMessage getMessageDecrypted(String Message,String senderid,
@@ -375,12 +378,25 @@ public class WebSocketService {
                 .retrieve()
                 .bodyToMono(DecMessage.class)
                 .block();
-        DecMessage decMessage = new DecMessage();
-        decMessage.setMessage(response.getMessage());
-        decMessage.setSenderId(senderid);
-        decMessage.setRecId(peerid);
+        if (response == null) {
+            System.out.println("Failed to get encrypted message. Response is null.");
+            // Option 1: Return a default error response (you can customize this)
+            DecMessage errorResponse = new DecMessage();
+            errorResponse.setMessage("Error: Failed to encrypt message");
+            errorResponse.setSenderId(senderid);
+            errorResponse.setRecId(peerid);
+            return errorResponse;
+        }
+        else
+        {
+            DecMessage decMessage = new DecMessage();
+            decMessage.setMessage(response.getMessage());
+            decMessage.setSenderId(senderid);
+            decMessage.setRecId(peerid);
 
-        return decMessage;
+            return decMessage;
+        }
+
 
     }
 
@@ -454,6 +470,7 @@ public class WebSocketService {
         outMessage.setCa_Pubkey(publicKeyMessage.getCa_Pubkey());
         outMessage.setSenderId(publicKeyMessage.getSenderId());
         outMessage.setRecId(publicKeyMessage.getRecId());
+        outMessage.setCreatedat(publicKeyMessage.getCreatedat());
         messagingTemplate.convertAndSend("/topic/public_key_ca",outMessage);
         return outMessage;
     }
@@ -466,6 +483,7 @@ public class WebSocketService {
         outMessage.setCa_Pubkey(publicKeyMessage.getCa_Pubkey());
         outMessage.setSenderId(publicKeyMessage.getSenderId());
         outMessage.setRecId(publicKeyMessage.getRecId());
+        outMessage.setCreatedat(publicKeyMessage.getCreatedat());
         messagingTemplate.convertAndSend("/topic/public_key_ca_rec",outMessage);
 
         return outMessage;

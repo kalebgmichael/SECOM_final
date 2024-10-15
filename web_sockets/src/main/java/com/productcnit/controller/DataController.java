@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/socket")
@@ -32,8 +34,12 @@ public class DataController {
     @Autowired
     private final WebSocketService webSocketService;
     private final KafkaTemplate<String, String> kafkasharedkeyTemplate;
+    private final KafkaTemplate<String, SymKeyResponse> kafkasymKeyGenerated;
     @Autowired
     private WebClient.Builder webClientBuilder;
+    // CompletableFuture instance should be created in the method where you're expecting the response.
+//    private CompletableFuture<SymKeyResponse> symKeyResponseFuture;
+
 
     @GetMapping("/data")
     public ResponseEntity<String> getData(@RequestParam("privatekey") String privateKey) {
@@ -74,7 +80,6 @@ public class DataController {
         String Ownerid = (String) claims.get("Owner_ID");
         System.out.println("OwnerId"+Ownerid);
         WebClient webClient2 = webClientBuilder.build();
-        WebClient webClient1= WebClient.create();
         GenKeyPairResponse secretMessage = webSocketService.getkeypair(authentication,Ownerid);
         String Ownpubkey_ca= webSocketService.getUser_ca();
         System.out.println("getkey_own_dh:This is the 8th message to retrive the public key after retriving the DH keypair and preparing to send back to user who sent the publickey");
@@ -102,6 +107,7 @@ public class DataController {
         ResMessage.setDh_Pubkey(response);
         ResMessage.setCa_Pubkey(Ownpubkey_ca);
         ResMessage.setRecId(Recid);
+        ResMessage.setCreatedat(new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date()));
         webSocketService.SendPublicKey_ca_peer(ResMessage);
         if (secretMessage != null) {
             return ResponseEntity.ok(secretMessage);
@@ -115,7 +121,7 @@ public class DataController {
                                  @RequestParam("sendid") String sendid,@RequestParam("peerid") String peerid,Authentication authentication)
     {
          System.out.println("rec_dh_pub_key:This is the 12th message we have public key of the " +
-                 "message receiver of the initial message  and signature of the symmetric key used to ecnrypt the dh of the initial message receiver ");
+                 "message receiver  of the initial message or peer  and signature of the symmetric key used to encrypt the dh of the initial message receiver or peer ");
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
@@ -163,13 +169,14 @@ public class DataController {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        System.out.println("rec_dh_pub_key: this is 15th message: symkey  encrypted with public key of the peer and signed by private key of the owener: concatenated with dh publc key of owner  encrypted by symm key  getenc_sig_peer"+response1);
+        System.out.println("rec_dh_pub_key: this is 15th message: symkey  encrypted with public key of the peer and signed by private key of the owner: concatenated with dh publc key of owner  encrypted by symm key  getenc_sig_peer: and public key of owner to verify signature"+response1);
 
         Peer_PublicKeyMessageSend ResMessage= new Peer_PublicKeyMessageSend();
         ResMessage.setSenderId(secretMessage.getGen_Owner_Id());
         ResMessage.setDh_Pubkey(response1);
         ResMessage.setCa_Pubkey(pub_key_ca);
         ResMessage.setRecId(sendid);
+        ResMessage.setCreatedat(new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date()));
         webSocketService.SendPublicKey_ca_peer_rec(ResMessage);
         System.out.println("this is the 16 th message concatendated message with dh to be decrypted sent to peer to topic public_key_ca_rec");
 
@@ -184,7 +191,7 @@ public class DataController {
     public PublicKeyMessage rec_dh_pub_key_rec(@RequestParam("encryptedmessage") String encryptedmessage,
                                            @RequestParam("sendid") String sendid,@RequestParam("peerid") String peerid,Authentication authentication)
     {
-        System.out.println("This is the 21th message cocnatendated dh of owner to be sent for decryption by verifying signature");
+        System.out.println("This is the 21th message cocatendated dh of owner to be sent for decryption by verifying signature");
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
@@ -208,7 +215,8 @@ public class DataController {
                 .block();
         System.out.println("decrypted dh key is"+response);
         String kafkasendid= sendid;
-        kafkasharedkeyTemplate.send("key-generated",kafkasendid);
+        SymKeyResponse symKeyResponse = new SymKeyResponse(sendid,peerid,true);
+        kafkasymKeyGenerated.send("SymKeyGenerated-topic-test", "Gen-key-pair", symKeyResponse);
         PublicKeyMessage outMessage= new PublicKeyMessage();
         outMessage.setPublicKey(response);
         outMessage.setSenderId(sendid);
@@ -231,6 +239,18 @@ public class DataController {
         ResMessage.setEnc_Sig_Own_Pubkey(publickey);
         ResMessage.setSenderId(Ownerid);
         ResMessage.setRecId(Recid);
+        webSocketService.SendPublicKey_ca(ResMessage);
+        return "Successfully sent public key";
+    }
+
+    @KafkaListener(topics = "send_pub_own_ca-topic", groupId = "group-id2")
+    public String get_pub_own_ca_copy(Sender_Reciever senderReciever) {
+        System.out.println("OwnerId"+senderReciever.getOwnerId());
+        Own_PublicKeyMessageSend ResMessage= new Own_PublicKeyMessageSend();
+        String publickey= webSocketService.getUser_ca();
+        ResMessage.setEnc_Sig_Own_Pubkey(publickey);
+        ResMessage.setSenderId(senderReciever.getOwnerId());
+        ResMessage.setRecId(senderReciever.getPeerId());
         webSocketService.SendPublicKey_ca(ResMessage);
         return "Successfully sent public key";
     }
@@ -302,29 +322,64 @@ public class DataController {
         System.out.println("this is from kafka"+sendid);
         return "this is kafka listner";
     }
+    // Kafka listener to process the received message
+//    @KafkaListener(topics = "SymKeyGenerated-topic", groupId = "group-id2")
+//    public void listenForSymKeyResponse1(SymKeyResponse symKeyResponse) {
+//        // Log when the Kafka message is received
+//        System.out.println("listenForSymKeyResponse: Received message from Kafka: " + symKeyResponse);
+//
+//        // Extract fields
+//        Boolean symKey = symKeyResponse.getSymKey();
+//        String ownerId = symKeyResponse.getGen_Owner_Id();
+//        String recId = symKeyResponse.getGen_User_Id();
+//
+//        // Log the extracted values
+//        System.out.println("listenForSymKeyResponse: Symmetric Key = " + symKey + ", Owner ID = " + ownerId + ", Recipient ID = " + recId);
+//
+//        // Complete the CompletableFuture, allowing GetEncrypt to continue
+//        symKeyResponseFuture.complete(symKeyResponse);
+//
+//        // Log that the CompletableFuture is completed
+//        System.out.println("listenForSymKeyResponse: CompletableFuture completed.");
+//    }
 
     @GetMapping("/Encrypt")
-    @KafkaListener(topics = "key-generated", groupId = "group-id4")
-    public EncMessageResponse GetEncrypt(Authentication authentication, @RequestParam(value= "encryptedMessage",required = false) String encryptedMessage,
-                                         @RequestParam(value = "peerid",required = false) String peerid,
-                                         @RequestParam(value = "kafkasendid",required = false) String kafkasendid)
-    {
-        System.out.println("GetEncrypt:This is First message");
-        get_pub_own_ca(peerid,authentication);
-        System.out.println("message to be encrypted"+encryptedMessage);
-//        String encryptedMessage1 = URLDecoder.decode(encryptedMessage, StandardCharsets.UTF_8);
-        System.out.println("message to be encrypted1"+encryptedMessage);
-        System.out.println("this is kafkasendid"+kafkasendid);
+    public EncMessageResponse GetEncrypt(Authentication authentication,
+                                         @RequestParam(value = "encryptedMessage", required = false) String encryptedMessage,
+                                         @RequestParam(value = "peerid", required = false) String peerid,
+                                         @RequestParam(value = "kafkasendid", required = false) String kafkasendid)
+            throws ExecutionException {
+        System.out.println("GetEncrypt: Start processing encryption request.");
+        // Initialize a new CompletableFuture for each request
+//        symKeyResponseFuture = new CompletableFuture<>();
+
+        // Get the JWT from the authentication object
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         Map<String, Object> claims = jwt.getClaims();
         String Ownerid = (String) claims.get("Owner_ID");
-        System.out.println("OwnerId"+Ownerid);
-        return webSocketService.getEncrypt(encryptedMessage,Ownerid,peerid,authentication);
+        System.out.println("OwnerId: " + Ownerid);
+        // Perform initial actions
+//        get_pub_own_ca(peerid, authentication);
+//        get_pub_own_ca_copy(peerid,Ownerid);
+        System.out.println("Message to be encrypted: " + encryptedMessage);
+        System.out.println("kafkasendid: " + kafkasendid);
 
+        // Log before waiting for the Kafka response
+        System.out.println("GetEncrypt: Waiting for Symmetric Key from Kafka...");
+
+//        // Wait for the Kafka response (blocking call)
+//        long startTime = System.currentTimeMillis();  // Start timer to measure waiting time
+//        SymKeyResponse symKeyResponse = symKeyResponseFuture.get();  // Blocking until Kafka response
+//        long endTime = System.currentTimeMillis();  // End timer
+//
+//        // Log after receiving the response
+//        System.out.println("GetEncrypt: Received Symmetric Key after waiting for " + (endTime - startTime) + " ms.");
+//        Boolean symKey = symKeyResponse.getSymKey();
+//        System.out.println("Symmetric Key: " + symKey);
+
+        // Continue with encryption logic
+        return webSocketService.getEncrypt(encryptedMessage, Ownerid, peerid, authentication);
     }
-
-
-
 
 
 }

@@ -163,15 +163,15 @@ function showMessage_Encrypted_messages(message) {
            console.log("handlePublicKey:secretmessage_new in hadnlepublickey"+ownerId1+"is"+secretmessage_new);
            // Extract values from the message body
             const dh_publicKey = secretMessage.dh_Pubkey;
-            console.log("handlePublicKey:dh_publicKey of the first entity that initiated the message"+secretmessage_new.dh_Pubkey);
+            console.log("handlePublicKey:dh_publicKey of the first entity or owner that initiated the message"+secretmessage_new.dh_Pubkey);
             const ca_Pubkey = secretMessage.ca_Pubkey;
             console.log("handlePublicKey:ca_Pubkey of the dh key owner"+ca_Pubkey);
             const senderId = secretMessage.senderId;
              console.log("senderId"+senderId);
             const recId = secretMessage.recId;
              console.log("recId"+recId);
-            const time = secretMessage.time;
-             console.log("time"+time);
+            const time = secretMessage.Createdat;
+             console.log("Createdat"+time);
         // Here you can do whatever you want with the secret message
             const url = `/api/socket/rec_dh_pub_key?encryptedmessage=${encodeURIComponent(dh_publicKey)}&publickey=${encodeURIComponent(ca_Pubkey)}&sendid=${encodeURIComponent(senderId)}&peerid=${encodeURIComponent(recId)}`;
             const ownerId = document.getElementById('ownerId').innerText;
@@ -213,14 +213,12 @@ function showMessage_Encrypted_messages(message) {
             const ca_Pubkey = secretMessage.ca_Pubkey;
             console.log("handlePublicKey_rec:ca_Pubkey"+ca_Pubkey);
             const senderId = secretMessage.senderId;
-             console.log("senderId"+senderId);
+            console.log("senderId"+senderId);
             const recId = secretMessage.recId;
-             console.log("recId"+recId);
-            const time = secretMessage.time;
+            console.log("recId"+recId);
+            const time = secretMessage.Createdat;
              console.log("time"+time);
-
         // Here you can do whatever you want with the secret message
-
             const url = `/api/socket/rec_dh_pub_key_rec?encryptedmessage=${encodeURIComponent(dh_publicKey)}&sendid=${encodeURIComponent(senderId)}&peerid=${encodeURIComponent(recId)}`;
             const ownerId = document.getElementById('ownerId').innerText;
 
@@ -371,7 +369,7 @@ function showMessage_Encrypted_messages(message) {
             const senderId = messageBody.senderId;
             const recId = messageBody.recId;
             const time = messageBody.time;
-
+            console.log("Time"+time);
             // Print the extracted values
               console.log("senderId"+senderId);
               console.log("recId"+recId);
@@ -386,7 +384,7 @@ function showMessage_Encrypted_messages(message) {
 
                   // Subscribe to the topic to receive messages
         stompClient.subscribe('/topic/peer-public-key', function (message) {
-                    console.log("Fourth message: This is peer's public key sent from the sender: from topic peer-public-key "+message)
+                    console.log("Fourth message: This is peer's public key sent from the owner: from topic peer-public-key "+message)
                     // Extract private key from the received message
                     const messageBody = JSON.parse(message.body);
                     // Extract values from the message body
@@ -439,7 +437,6 @@ function showMessage_Encrypted_messages(message) {
              // Parse the JSON message body
              const messageBody_enc1 = JSON.parse(message_enc.body);
 
-
          // Extract values from the message body
              const SenderId_enc = messageBody_enc1.senderId;
              const RecId_enc = messageBody_enc1.recId;
@@ -476,27 +473,15 @@ function showMessage_Encrypted_messages(message) {
                 .then(secretMessage => {
                 secretmessage_new = secretMessage;
                     const parsedSecretMessage = JSON.parse(secretMessage);
-                    console.log("secretmessage_decrypted_new"+secretmessage_new);
                     console.log("secretmessage_decrypted_parsed"+parsedSecretMessage);
-                    console.log('This is the secret message: ' + JSON.stringify(parsedSecretMessage, null, 2));
                     // Now you can access each key as expected
                     const m2mCin = parsedSecretMessage["message"];
                     const messageBody = JSON.parse(m2mCin);  // Since message is also a stringified JSON
                     console.log("this is message body"+messageBody);
-
                     // Loop over the object and print the formatted result
                     const formatted_decrypted_Output = displayObject(messageBody);
                     console.log("Formatted JSON output:", JSON.stringify(formatted_decrypted_Output, null, 2));
                     showMessage_Encrypted_messages('This is the secret message'+JSON.stringify(formatted_decrypted_Output, null, 2));
-
-                    const metadata = messageBody["m2m:cin"].con.metadata;
-                    const sensorData = messageBody["m2m:cin"].con.sensorData;
-                    console.log("Primary ID:", messageBody["m2m:cin"].pi); // "3-20240219161702303"
-                    console.log("Heading:", metadata.heading); // "298.0"
-                    console.log("Latitude:", metadata.latitude); // "43.657535"
-                    console.log("Speed over ground (SOG):", sensorData.SOG); // "9.11"
-                    console.log("Course over ground (COG):", sensorData.COG); // "302.5"
-
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -522,7 +507,7 @@ function showMessage_Encrypted_messages(message) {
           .then(response => response.json()) // Parsing the JSON response body
           .then(data => {
               console.log('Success:', data);
-              alert('Encryption Successful!'); // Alerting the user upon successful operation
+             // alert('Encryption Successful!'); // Alerting the user upon successful operation
           })
           .catch((error) => {
               console.error('Error:', error); // Handling errors in the request

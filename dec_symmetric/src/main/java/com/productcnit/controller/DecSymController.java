@@ -97,7 +97,22 @@ public class DecSymController {
         EncKeyResponse[] sharedkeys3 = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
         EncKeyResponse[] sharekeys2= encKeyRepository.findAll1().toArray(new EncKeyResponse[0]);
         System.out.println("this is shared keys"+sharekeys2[1].getEnc_Key());
-        String enc_sharedkey= sharedkeys[0].getEnc_Key();
+        String enc_sharedkey;
+
+        if(sharedkeys.length!=0)
+        {
+            enc_sharedkey= sharedkeys[0].getEnc_Key();
+            // logic to check key refreshment
+            // delete key stored and then regenerate a new one
+
+            System.out.println("key is not null and  created time at "+sharedkeys[0].getCreatedat());
+        }
+        else
+        {
+            enc_sharedkey = "";
+            System.out.println("The Sym Encryption key is null");
+            return null;
+        }
         String response = webClient1.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
