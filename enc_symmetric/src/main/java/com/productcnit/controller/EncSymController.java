@@ -44,15 +44,6 @@ public class EncSymController {
     private final WebClient webClient = WebClient.builder().build();
     @Autowired
     private WebClient.Builder webClientBuilder;
-
-    @GetMapping("/getsecret")
-    public String getdata()
-    {
-        encSymService.initFromStrings("CHuO1Fjd8YgJqTyapibFBQ==", "e3IYYJC2hxe24/EO");
-
-        return encSymService.encrypt("kalebCyber");
-    }
-
     // Kafka listener to process the received message
     @KafkaListener(topics = "SymKeyGenerated-topic-test", groupId = "group-id2")
     public void listenForSymKeyResponse(SymKeyResponse symKeyResponse) {
@@ -76,116 +67,111 @@ public class EncSymController {
 
     @GetMapping("/Encrypt")
     public EncMessage Encrypt(@RequestParam("message") String message,
-                              @RequestParam("sendid") String sendid, @RequestParam("peerid") String peerid, Authentication authentication) throws ExecutionException, InterruptedException, ParseException {
+                              @RequestParam("sendid") String sendid,
+                              @RequestParam("peerid") String peerid,
+                              Authentication authentication) throws ExecutionException, InterruptedException, ParseException {
 
-//        try
-//        {
-            // Initialize a new CompletableFuture for each request
-            symKeyResponseCompletableFuture = new CompletableFuture<>();
-            WebClient webClient1 = webClientBuilder.build();
-           Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-            String message1 = URLDecoder.decode(message, StandardCharsets.UTF_8);
-            String sendid1 = URLDecoder.decode(sendid, StandardCharsets.UTF_8);
-            String peerid1 = URLDecoder.decode(peerid, StandardCharsets.UTF_8);
-            System.out.println("message1 in encryptsym is " + message1);
-            System.out.println("message in encryptsym is " + message);
+        // Initialize a new CompletableFuture for each request
+        symKeyResponseCompletableFuture = new CompletableFuture<>();
 
-            EncKeyResponse[] sharedkeys = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
-            String enc_sharedkey;
-            if(sharedkeys.length!=0)
-            {
-                enc_sharedkey= sharedkeys[0].getEnc_Key();
-                String Createdat= sharedkeys[0].getCreatedat();
-                String Currenttime= new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
-                // Assuming the date format is "HH:mm dd-MM-yyyy"
-                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        // Decode incoming request parameters
+        String decodedMessage = URLDecoder.decode(message, StandardCharsets.UTF_8);
+        String decodedSendId = URLDecoder.decode(sendid, StandardCharsets.UTF_8);
+        String decodedPeerId = URLDecoder.decode(peerid, StandardCharsets.UTF_8);
 
-                // Parse the created time and current time into Date objects
-                Date createdTimeDate = formatter.parse(Createdat);
-                Date currentTimeDate = formatter.parse(Currenttime);
-                // Get the difference in milliseconds
-                long timeDifferenceInMillis = Math.abs(currentTimeDate.getTime() - createdTimeDate.getTime());
+        // Extract JWT token
+        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
 
-                if(enc_sharedkey != null && timeDifferenceInMillis <= 60000)
-                {
-                    System.out.println("sym key is not null and created time at"+sharedkeys[0].getCreatedat());
-                }
-                else
-                {
-                    Sender_Reciever senderReciever = new Sender_Reciever(sendid,peerid);
-                    kafkaSenderReciever.send("send_pub_own_ca-topic", "Gen-key-pair", senderReciever);
-                    // Log before waiting for the Kafka response
-                    System.out.println("Encrypt: Waiting for Symmetric Key from Kafka...");
+        // Retrieve shared encryption keys
+        EncKeyResponse[] sharedKeys = encKeyRepository.findByOwnerAndPairId(decodedSendId, decodedPeerId).toArray(new EncKeyResponse[0]);
+        String encryptedSharedKey = getSharedKey(sharedKeys, decodedSendId, decodedPeerId);
 
-                    // Wait for the Kafka response (blocking call)
-                    long startTime = System.currentTimeMillis();  // Start timer to measure waiting time
-                    SymKeyResponse symKeyResponse = symKeyResponseCompletableFuture.get();  // Blocking until Kafka response
-                    long endTime = System.currentTimeMillis();  // End timer
+        // Fetch the encrypted symmetric key
+        String decryptedSharedKey = fetchDecryptedSharedKey(encryptedSharedKey, authentication);
+        System.out.println("This is the decrypted shared key"+decryptedSharedKey);
 
-                    // Log after receiving the response
-                    System.out.println("Encrypt: Received Symmetric Key after waiting for " + (endTime - startTime) + " ms.");
-                    Boolean symKey = symKeyResponse.getSymKey();
-                    System.out.println("Symmetric Key: " + symKey);
+        // Initialize encryption service
+        encSymService.initFromStrings(decryptedSharedKey, "e3IYYJC2hxe24/EO");
 
-                    EncKeyResponse[] sharedkeys1 = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
-                    enc_sharedkey= sharedkeys1[0].getEnc_Key();
-                }
+        // Encrypt the message
+        String encryptedMessage = encSymService.encrypt(decodedMessage);
 
-                // logic to check key refreshment
-                System.out.println("key array is not null and created time at"+sharedkeys[0].getCreatedat());
+        // Prepare and return encrypted message response
+        EncMessage encMessage = new EncMessage();
+        encMessage.setMessage(encryptedMessage);
+        encMessage.setSenderId(decodedSendId);
+        encMessage.setRecId(decodedPeerId);
 
-            }
-            else
-            {
-                enc_sharedkey = "";
-                Sender_Reciever senderReciever = new Sender_Reciever(sendid,peerid);
-                kafkaSenderReciever.send("send_pub_own_ca-topic", "Gen-key-pair", senderReciever);
-                // Log before waiting for the Kafka response
-                System.out.println("Encrypt: Waiting for Symmetric Key from Kafka...");
+        return encMessage;
+    }
 
-                // Wait for the Kafka response (blocking call)
-                long startTime = System.currentTimeMillis();  // Start timer to measure waiting time
-                SymKeyResponse symKeyResponse = symKeyResponseCompletableFuture.get();  // Blocking until Kafka response
-                long endTime = System.currentTimeMillis();  // End timer
+    /**
+     * Helper method to fetch the shared encryption key, generating a new one if necessary.
+     */
+    private String getSharedKey(EncKeyResponse[] sharedKeys, String sendid, String peerid) throws ExecutionException, InterruptedException, ParseException {
+        String encSharedKey;
 
-                // Log after receiving the response
-                System.out.println("Encrypt: Received Symmetric Key after waiting for " + (endTime - startTime) + " ms.");
-                Boolean symKey = symKeyResponse.getSymKey();
-                System.out.println("Symmetric Key: " + symKey);
+        if (sharedKeys.length > 0 && isKeyValid(sharedKeys[0])) {
+            encSharedKey = sharedKeys[0].getEnc_Key();
+            System.out.println("Key is valid, created at: " + sharedKeys[0].getCreatedat());
+        } else {
+            // Generate a new key pair using Kafka
 
-                EncKeyResponse[] sharedkeys1 = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
-                enc_sharedkey= sharedkeys1[0].getEnc_Key();
-            }
-        String finalEnc_sharedkey = enc_sharedkey;
-        String response = webClient1.get()
+            Sender_Reciever senderReceiver = new Sender_Reciever(sendid, peerid);
+            kafkaSenderReciever.send("send_pub_own_ca-topic", "Gen-key-pair", senderReceiver);
+
+            System.out.println("Waiting for new Symmetric Key from Kafka...");
+
+            // Wait for the Kafka listener to complete the future with the symmetric key
+            SymKeyResponse symKeyResponse = symKeyResponseCompletableFuture.get();
+            System.out.println("Received Symmetric Key: " + symKeyResponse.getSymKey());
+            //Create delay to retrieve the new key instead of the old key
+            // Introduce delays
+            System.out.println("Delay one");
+            Thread.sleep(100); // 50 milliseconds
+            // Fetch the newly generated key
+            EncKeyResponse[] newSharedKeys = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
+            encSharedKey = newSharedKeys[0].getEnc_Key();
+        }
+
+        return encSharedKey;
+    }
+
+    /**
+     * Helper method to check if the encryption key is still valid.
+     */
+    private boolean isKeyValid(EncKeyResponse keyResponse) throws ParseException {
+        String createdAt = keyResponse.getCreatedat();
+        String currentTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
+
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        Date createdTimeDate = formatter.parse(createdAt);
+        Date currentTimeDate = formatter.parse(currentTime);
+
+        // Return true if the time difference is less than or equal to 60,000 ms (1 minute)
+        return Math.abs(currentTimeDate.getTime() - createdTimeDate.getTime()) <= 60000;
+    }
+
+    /**
+     * Helper method to fetch the decrypted shared key from the DECKEY service.
+     */
+    private String fetchDecryptedSharedKey(String encryptedSharedKey, Authentication authentication) {
+        WebClient webClient = webClientBuilder.build();
+        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+        String response = webClient.get()
                 .uri(builder -> {
                     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
                             .scheme("http")
                             .host("DECKEY-SERVICE")
                             .path("/api/deckey/get_enc_sig_verif")
-                            .queryParam("encryptedmessage", URLEncoder.encode(finalEnc_sharedkey, StandardCharsets.UTF_8));
+                            .queryParam("encryptedmessage", URLEncoder.encode(encryptedSharedKey, StandardCharsets.UTF_8));
                     return uriBuilder.build().toUri();
                 })
                 .headers(httpHeaders -> httpHeaders.setBearerAuth(jwt.getTokenValue()))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-            System.out.println("decrypted sharedkey is"+response);
-            encSymService.initFromStrings(response, "e3IYYJC2hxe24/EO");
-            String encryptedmessage= encSymService.encrypt(message1);
-            System.out.println("encryptedmessage in encryptsym is " + encryptedmessage);
-            EncMessage encMessage = new EncMessage();
-            encMessage.setMessage(encryptedmessage);
-            encMessage.setSenderId(sendid);
-            encMessage.setRecId(peerid);
-            return encMessage;
-//        }
-//        catch (Exception ignored){
-//            System.out.println("error in Encrypt method");
-//            return null;
-//        }
-
-
+        return  response;
     }
 
     //Enckey Repository info

@@ -216,12 +216,12 @@ public class DataController {
         System.out.println("decrypted dh key is"+response);
         String kafkasendid= sendid;
         SymKeyResponse symKeyResponse = new SymKeyResponse(sendid,peerid,true);
-        kafkasymKeyGenerated.send("SymKeyGenerated-topic-test", "Gen-key-pair", symKeyResponse);
         PublicKeyMessage outMessage= new PublicKeyMessage();
         outMessage.setPublicKey(response);
         outMessage.setSenderId(sendid);
         outMessage.setRecId(peerid);
         outMessage.setTime(new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date()));
+        kafkasymKeyGenerated.send("SymKeyGenerated-topic-test", "Gen-key-pair", symKeyResponse);
         return outMessage;
     }
 
@@ -322,26 +322,6 @@ public class DataController {
         System.out.println("this is from kafka"+sendid);
         return "this is kafka listner";
     }
-    // Kafka listener to process the received message
-//    @KafkaListener(topics = "SymKeyGenerated-topic", groupId = "group-id2")
-//    public void listenForSymKeyResponse1(SymKeyResponse symKeyResponse) {
-//        // Log when the Kafka message is received
-//        System.out.println("listenForSymKeyResponse: Received message from Kafka: " + symKeyResponse);
-//
-//        // Extract fields
-//        Boolean symKey = symKeyResponse.getSymKey();
-//        String ownerId = symKeyResponse.getGen_Owner_Id();
-//        String recId = symKeyResponse.getGen_User_Id();
-//
-//        // Log the extracted values
-//        System.out.println("listenForSymKeyResponse: Symmetric Key = " + symKey + ", Owner ID = " + ownerId + ", Recipient ID = " + recId);
-//
-//        // Complete the CompletableFuture, allowing GetEncrypt to continue
-//        symKeyResponseFuture.complete(symKeyResponse);
-//
-//        // Log that the CompletableFuture is completed
-//        System.out.println("listenForSymKeyResponse: CompletableFuture completed.");
-//    }
 
     @GetMapping("/Encrypt")
     public EncMessageResponse GetEncrypt(Authentication authentication,

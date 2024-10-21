@@ -5,43 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4f8722-edc4-46f7-b308-2e02910af270" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/dto/Sender_Reciever.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/dto/SymKeyResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/dto/SymKeyResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/dto/Sender_Reciever.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/dto/SymKeyResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/dto/ReGenKeyPairResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/dto/ReGenKeyPairResponse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/controller/DecSymController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/controller/DecSymController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/dto/EncKeyResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/dto/EncKeyResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/service/DecSymService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/src/main/java/com/productcnit/service/DecSymService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/controller/DecSymController.class" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/controller/DecSymController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/dto/EncKeyResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/dec_symmetric/target/classes/com/productcnit/dto/EncKeyResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/controller/EncSymController.java" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/controller/EncSymController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/dto/EncKeyResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/java/com/productcnit/dto/EncKeyResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/com/productcnit/controller/EncSymController.class" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/com/productcnit/controller/EncSymController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enc_symmetric/target/classes/com/productcnit/dto/EncKeyResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/enc_symmetric/target/classes/com/productcnit/dto/EncKeyResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/encryption_key/src/main/java/com/productcnit/controller/EncryptionPubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/src/main/java/com/productcnit/controller/EncryptionPubController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/encryption_key/target/classes/com/productcnit/controller/EncryptionPubController.class" beforeDir="false" afterPath="$PROJECT_DIR$/encryption_key/target/classes/com/productcnit/controller/EncryptionPubController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/Controller/KeyexchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/Controller/KeyexchangeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/dto/EncKeyResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/dto/EncKeyResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/dto/GenKeyPairResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/src/main/java/com/productcnit/dto/GenKeyPairResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/Controller/KeyexchangeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/Controller/KeyexchangeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/dto/EncKeyResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/dto/EncKeyResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/dto/GenKeyPairResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/key_exchange_protocol/target/classes/com/productcnit/dto/GenKeyPairResponse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/controller/DataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/controller/DataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/dto/Peer_PublicKeyMessageSend.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/dto/Peer_PublicKeyMessageSend.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/service/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/java/com/productcnit/service/WebSocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/src/main/resources/static/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/controller/DataController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/controller/DataController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/dto/Peer_PublicKeyMessageSend.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/dto/Peer_PublicKeyMessageSend.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/service/WebSocketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/com/productcnit/service/WebSocketService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_sockets/target/classes/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/web_sockets/target/classes/static/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,12 +69,15 @@
     &quot;Application.Shore_control_Application.executor&quot;: &quot;Debug&quot;,
     &quot;Application.WebSocketApplication.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev10&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev11&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/cnit/Desktop/SECOM/SECOM_final/web_sockets/src/main/resources/static/imgaes&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.productcnit.dto" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web_sockets/src/main/resources/static/imgaes" />
       <recent name="$PROJECT_DIR$/realms" />
@@ -175,9 +155,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.WebSocketApplication" />
+        <item itemvalue="Application.KeyExchangeProtocolApplication" />
         <item itemvalue="Application.Shore_control_Application" />
         <item itemvalue="Application.ShipA_Application" />
-        <item itemvalue="Application.KeyExchangeProtocolApplication" />
         <item itemvalue="Application.EncryptionKey" />
       </list>
     </recent_temporary>

@@ -72,70 +72,103 @@ public class DecSymController {
         return decMessage;
     }
     @GetMapping("/GetDecrypt")
-    public DecMessage GetDecrypt(@RequestParam("message") String message,
-                                 @RequestParam("sendid") String sendid, @RequestParam("peerid") String peerid, Authentication authentication)
-    {
-        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-        WebClient webClient1 = webClientBuilder.build();
-        String message1 = URLDecoder.decode(message, StandardCharsets.UTF_8);
-//        String message1 = message;
-        String sendid1 = URLDecoder.decode(sendid, StandardCharsets.UTF_8);
-        String peerid1 = URLDecoder.decode(peerid, StandardCharsets.UTF_8);
-        System.out.println("message1 in encryptsym is " + message1);
-        System.out.println("message in encryptsym is " + message);
-        System.out.println("message in sendid1 is " + sendid1);
-        System.out.println("message in peerid1 is " + peerid1);
-        // Add double quotes around sendid1 and peerid1
-        String quotedSendid1 = "\"" + sendid1 + "\"";
-        String quotedPeerid1 = "\"" + peerid1 + "\"";
+    public DecMessage getDecrypt(@RequestParam("message") String message, @RequestParam("sendid") String sendid,
+            @RequestParam("peerid") String peerid, Authentication authentication) {
+        // Decode input parameters
+        String decodedMessage = URLDecoder.decode(message, StandardCharsets.UTF_8);
+        String decodedSendid = URLDecoder.decode(sendid, StandardCharsets.UTF_8);
+        String decodedPeerid = URLDecoder.decode(peerid, StandardCharsets.UTF_8);
 
-        System.out.println("sendid1 with quotes is " + quotedSendid1);
-        System.out.println("peerid1 with quotes is " + quotedPeerid1);
-//        String message2 = message1.replaceAll(
-//        "|\"$", "");
-        EncKeyResponse[] sharedkeys = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
-        EncKeyResponse[] sharedkeys3 = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
-        EncKeyResponse[] sharekeys2= encKeyRepository.findAll1().toArray(new EncKeyResponse[0]);
-        System.out.println("this is shared keys"+sharekeys2[1].getEnc_Key());
-        String enc_sharedkey;
+        logDecodedInputs(decodedMessage, decodedSendid, decodedPeerid);
 
-        if(sharedkeys.length!=0)
-        {
-            enc_sharedkey= sharedkeys[0].getEnc_Key();
-            // logic to check key refreshment
-            // delete key stored and then regenerate a new one
-
-            System.out.println("key is not null and  created time at "+sharedkeys[0].getCreatedat());
-        }
-        else
-        {
-            enc_sharedkey = "";
-            System.out.println("The Sym Encryption key is null");
+        // Fetch shared encryption key
+        String encSharedKey = fetchSharedEncryptionKey(decodedSendid, decodedPeerid);
+        if (encSharedKey == null) {
+            System.out.println("The Symmetric Encryption key is null");
             return null;
         }
-        String response = webClient1.get()
-                .uri(builder -> {
-                    UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
+        // Retrieve and decrypt the shared key from external service
+        String decryptedSharedKey = fetchDecryptedSharedKey(encSharedKey, getJwtToken(authentication));
+        if (decryptedSharedKey == null) {
+            return null; // Handle error in case the key retrieval failed
+        }
+        // Decrypt the message using the decrypted shared key
+        String decryptedMessage = decryptMessage(decryptedSharedKey, decodedMessage);
+        if (decryptedMessage == null) {
+            return null; // Handle decryption error
+        }
+        // Prepare response
+        return createDecryptedMessageResponse(decryptedMessage, decodedSendid, decodedPeerid);
+    }
+
+    // Helper method to log decoded inputs
+    private void logDecodedInputs(String message, String sendid, String peerid) {
+        System.out.println("Decoded message: " + message);
+        System.out.println("Decoded sendid: " + sendid);
+        System.out.println("Decoded peerid: " + peerid);
+    }
+
+    // Helper method to fetch the shared encryption key
+    private String fetchSharedEncryptionKey(String sendid, String peerid) {
+        EncKeyResponse[] sharedKeys = encKeyRepository.findByOwnerAndPairId(sendid, peerid).toArray(new EncKeyResponse[0]);
+        if (sharedKeys.length > 0) {
+            System.out.println("Key is valid, created at: " + sharedKeys[0].getCreatedat());
+            return sharedKeys[0].getEnc_Key();
+        } else {
+            return null;
+        }
+    }
+
+    // Helper method to fetch the decrypted shared key
+    private String fetchDecryptedSharedKey(String encSharedKey, String jwtToken) {
+        WebClient webClient = webClientBuilder.build();
+        try {
+            return webClient.get()
+                    .uri(builder -> UriComponentsBuilder.newInstance()
                             .scheme("http")
                             .host("DECKEY-SERVICE")
                             .path("/api/deckey/get_enc_sig_verif")
-                            .queryParam("encryptedmessage", URLEncoder.encode(enc_sharedkey, StandardCharsets.UTF_8));
-                    return uriBuilder.build().toUri();
-                })
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(jwt.getTokenValue()))
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-        System.out.println("decrypted sharedkey is"+response);
-        decSymService.initFromStrings(response, "e3IYYJC2hxe24/EO");
-        String decryptedmessage= decSymService.decrypt(message1);
-        System.out.println("dectryptedmessage in GetDncrypt is " + decryptedmessage);
+                            .queryParam("encryptedmessage", URLEncoder.encode(encSharedKey, StandardCharsets.UTF_8))
+                            .build().toUri())
+                    .headers(httpHeaders -> httpHeaders.setBearerAuth(jwtToken))
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+        } catch (Exception e) {
+            System.out.println("Error fetching decrypted shared key: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Refactored method to handle message decryption
+    private String decryptMessage(String decryptedSharedKey, String message) {
+        try {
+            System.out.println("Initializing decryption service...");
+            decSymService.initFromStrings(decryptedSharedKey, "e3IYYJC2hxe24/EO");
+            System.out.println("Decrypting message: " + message);
+            return decSymService.decrypt(message);
+        } catch (Exception e) {
+            System.out.println("Error during message decryption: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Helper method to create the DecMessage response
+    private DecMessage createDecryptedMessageResponse(String decryptedMessage, String sendid, String peerid) {
         DecMessage decMessage = new DecMessage();
-        decMessage.setMessage(decryptedmessage);
-        decMessage.setSenderId(sendid1);
-        decMessage.setRecId(peerid1);
+        decMessage.setMessage(decryptedMessage);
+        decMessage.setSenderId(sendid);
+        decMessage.setRecId(peerid);
+        System.out.println("Message Decrypted"+decMessage);
         return decMessage;
     }
+
+    // Helper method to extract JWT token from authentication
+    private String getJwtToken(Authentication authentication) {
+        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+        return jwt.getTokenValue();
+    }
+
     //Enckey Repository info
     @PostMapping("/EncKeySave")
     public EncKeyResponse SaveGen(@RequestBody EncKeyResponse encKeyResponse) {

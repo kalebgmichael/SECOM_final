@@ -109,7 +109,7 @@ public class DecSymService {
         String SecretKey = secretkey;
      initFromStrings(SecretKey, "e3IYYJC2hxe24/EO");
 
-     System.out.println("secretkey1"+secretkey);
+     System.out.println("secretkey"+secretkey);
 
         WebClient webClient1 = webClientBuilder.build();
         WebClient webClient2= WebClient.create();
