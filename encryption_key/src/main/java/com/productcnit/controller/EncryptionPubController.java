@@ -80,7 +80,6 @@ public class EncryptionPubController {
         String message1 = URLDecoder.decode(message, StandardCharsets.UTF_8);
         String publickey_peer1 = URLDecoder.decode(publickey_peer, StandardCharsets.UTF_8);
         System.out.println("getenc_sig_peer:this is the public key of the peer"+publickey_peer1);
-        System.out.println("getenc_sig_peer:this is the public key size"+publickey_peer1.length());
         encryptionPubService.initFromStrings_peer(publickey_peer1);
         SecretKey key= encryptionPubService.initFromStrings("e3IYYJC2hxe24/EO");
         String sym_key= encryptionPubService.encode(key.getEncoded());

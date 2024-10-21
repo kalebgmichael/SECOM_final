@@ -8,6 +8,7 @@ import com.productcnit.repository.EncKeyRepository;
 import com.productcnit.repository.GeneralKeyPairRepository;
 import com.productcnit.repository.KeyPairRespository;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,16 +21,21 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/key")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class KeyexchangeController {
 
 
@@ -71,16 +77,10 @@ public class KeyexchangeController {
 
     private final KafkaTemplate<String, PublicKeyMessage> kafkaTemplate;
     private final KafkaTemplate<String, GenKeyPairResponse> kafkaTemplate1;
-
-
-
-    public KeyexchangeController(KeyManager keyManager, HttpSession session, KafkaTemplate<String, PublicKeyMessage> kafkaTemplate, KafkaTemplate<String, GenKeyPairResponse> kafkaTemplate1) {
-        this.keyManager = keyManager;
-        this.session = session;
-        this.kafkaTemplate = kafkaTemplate;
-        this.kafkaTemplate1 = kafkaTemplate1;
-        this.restTemplate=new RestTemplate();
-    }
+    private final KafkaTemplate<String, SymKeyResponse> kafkasymKeyGenerated;
+    private final KafkaTemplate<String, ReGenKeyPairResponse> reGenKeyPairResponseKafkaTemplate;
+    private final KafkaTemplate<String, SenRecResponse> kafkaloginTemplate;
+    private CompletableFuture<ReGenKeyPairResponse> reGenKeyPairResponseCompletableFuture;
 
 
     @GetMapping("/getpair")
@@ -135,27 +135,14 @@ public class KeyexchangeController {
     }
 
     @KafkaListener(topics = "Save-Gen-keypair-topic", groupId = "group-id3")
-    public KeyPairResponse SaveGenKeyPair(SenRecResponse senRecResponse) {
+    public KeyPairResponse SaveGenKeyPair(SenRecResponse senRecResponse) throws ParseException {
         String Owner_ID = senRecResponse.getGen_Owner_Id();
         String userId = senRecResponse.getGen_User_Id();
         System.out.println("this userid "+userId);
 
         GenKeyPairResponse keys= generalKeyPairRepository.findKeypairbyId(Owner_ID);
-        if(keys != null)
+        if(keys != null && isKeyValid(keys.getCreatedat()))
         {
-//            KeyManager.generateKeyPair();
-//            String privateKey = keyManager.generatePrviatekey();
-//            String publicKey = keyManager.generatePublicKey();
-//            keyPairResponse= new KeyPairResponse(publicKey,privateKey);
-//            keyManager.initFromStringsPublickey(publicKey);
-//            keyManager.initFromStringsPrvkey(privateKey);
-//            String sharedKey = keyManager.generateSharedSecret();
-//            System.out.println("the shared key is "+sharedKey);
-//            // Save the generated key pair to the repository
-//            GenKeyPairResponse genKeyPairResponse= new GenKeyPairResponse(Owner_ID,userId,privateKey,publicKey);
-//            System.out.println("private" +genKeyPairResponse.getGen_private_Key());
-//            System.out.println("public" +genKeyPairResponse.getGen_public_Key());
-
           System.out.println("Data already exists in cache");
           return null;
         }
@@ -170,23 +157,63 @@ public class KeyexchangeController {
             keyManager.initFromStringsPublickey(publicKey);
             keyManager.initFromStringsPrvkey(privateKey);
             String sharedKey = keyManager.generateSharedSecret();
-            System.out.println("the shared key is "+sharedKey);
+            String Createdat= new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
+//            System.out.println("the shared key is "+sharedKey);
             // Save the generated key pair to the repository
-            GenKeyPairResponse genKeyPairResponse= new GenKeyPairResponse(Owner_ID,userId,privateKey,publicKey);
+            GenKeyPairResponse genKeyPairResponse= new GenKeyPairResponse(Owner_ID,userId,privateKey,publicKey,Createdat);
             generalKeyPairRepository.save(genKeyPairResponse);
             System.out.println("Saved data to cache by "+ userId);
-
 
             return keyPairResponse;
         }
 
     }
+    // Method to regenerate the DH keypair
+    @KafkaListener(topics = "Save-reGenerate-keypair-topic", groupId = "group-id3")
+    public KeyPairResponse SaveReGenerateKeyPair_new(SenRecResponse senRecResponse) throws ParseException {
+        String Owner_ID = senRecResponse.getGen_Owner_Id();
+        String userId = senRecResponse.getGen_User_Id();
+        System.out.println("this userid "+userId);
+            KeyManager.generateKeyPair();
+            String privateKey = keyManager.generatePrviatekey();
+            String publicKey = keyManager.generatePublicKey();
+            System.out.println("Private Key: " + privateKey);
+            System.out.println("Public Key: " + publicKey);
+            keyPairResponse= new KeyPairResponse(publicKey,privateKey);
+            keyManager.initFromStringsPublickey(publicKey);
+            keyManager.initFromStringsPrvkey(privateKey);
+            String sharedKey = keyManager.generateSharedSecret();
+            String Createdat= new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
+//            System.out.println("the shared key is "+sharedKey);
+            // Save the generated key pair to the repository
+            GenKeyPairResponse genKeyPairResponse= new GenKeyPairResponse(Owner_ID,userId,privateKey,publicKey,Createdat);
+            generalKeyPairRepository.save(genKeyPairResponse);
+            ReGenKeyPairResponse reGenKeyPairResponse= new ReGenKeyPairResponse(Owner_ID,userId,true,Createdat);
+            reGenKeyPairResponseKafkaTemplate.send("DHkeypairRegenerated-topic", "Gen-key-pair", reGenKeyPairResponse);
+            System.out.println("Saved data to cache by "+ userId);
+            return keyPairResponse;
+    }
+
+    // Kafka listener to process the received message
+    @KafkaListener(topics = "DHkeypairRegenerated-topic", groupId = "group-id2")
+    public void listenForGenKeyPairResponse(ReGenKeyPairResponse reGenKeyPairResponse) {
+        // Log when the Kafka message is received
+        System.out.println("listenForGenKeyPairResponse: Received message from Kafka: " + reGenKeyPairResponse);
+        // Extract fields
+        Boolean dhkeypair = reGenKeyPairResponse.getGenerated();
+        String ownerId = reGenKeyPairResponse.getGen_Owner_Id();
+        String userId = reGenKeyPairResponse.getGen_User_Id();
+        // Log the extracted values
+        System.out.println("listenForGenKeyPairResponse: Symmetric Key = " + dhkeypair + ", Owner ID = " + ownerId + ", Recipient ID = " + userId);
+        // Complete the CompletableFuture, allowing GetEncrypt to continue
+        reGenKeyPairResponseCompletableFuture.complete(reGenKeyPairResponse);
+        // Log that the CompletableFuture is completed
+        System.out.println("listenForGenKeyPairResponse: CompletableFuture completed.");
+    }
 
 
     @GetMapping("/userId2")
     private String  getUserId2(Authentication authentication) {
-//        Map<String, String> response = new HashMap<>();
-
         try {
             if (!(authentication instanceof JwtAuthenticationToken)) {
                 throw new SecurityException("Invalid authentication type");
@@ -207,10 +234,6 @@ public class KeyexchangeController {
             String ownerid = (String) claims.get("Owner_ID"); // Adjust claim key if needed
             System.out.println("ownerid"+ ownerid);
             System.out.println("email"+ email);
-//
-//            response.put("email", email);
-//            response.put("username", username); // You can add more profile details as needed
-
             return ownerid;
         } catch (Exception e) {
             //log.error("Error retrieving user information from JWT:", e);
@@ -219,77 +242,42 @@ public class KeyexchangeController {
         }
     }
 
-
-//    @GetMapping("/sharedkey")
-//    @KafkaListener(topics = "key-pair-topic", groupId = "group-id2")
-//    public String getsecsharedkey(@RequestParam("Ownerid") String Ownerid,@RequestParam("Recid") String Recid, @RequestParam("publicKey") String publicKey) {
-//        System.out.println("publickey"+publicKey);
-//        // Decode the public key
-//        String decodedPublicKey = URLDecoder.decode(publicKey, StandardCharsets.UTF_8);
-//
-//        // Print the decoded public key
-//        System.out.println("Decoded public key: " + decodedPublicKey);
-//        GenKeyPairResponse keys = generalKeyPairRepository.findKeypairbyId("00001");
-//        GenKeyPairResponse keys1 = generalKeyPairRepository.findKeypairbyId("00002");
-//        System.out.println("publickey1"+keys.getGen_public_Key().toString());
-//        System.out.println("privatekey1"+keys.getGen_private_Key().toString());
-////        System.out.println("privatekey2"+keys1.getGen_private_Key().toString());
-////        KeyManager.generateKeyPair();
-//        keyManager.initFromStringsPublickey(decodedPublicKey);
-//        keyManager.initFromStringsPrvkey(keys1.getGen_private_Key());
-//        String sharedKey = keyManager.generateSharedSecret();
-//        System.out.println("the shared key is "+sharedKey);
-//        return "sharedKey";
-//    }
 @GetMapping("/sharedkey")
 @KafkaListener(topics = "key-pair-topic", groupId = "group-id2")
-public String getsecsharedkey(@RequestParam("SenderId") String SenderId,@RequestParam("Recid") String Recid, @RequestParam("publicKey") String publicKey,Authentication authentication) {
-//    System.out.println("publickey"+publicKey);
-
+public String getsecsharedkey(@RequestParam("SenderId") String SenderId,@RequestParam("Recid") String Recid, @RequestParam("publicKey") String publicKey,Authentication authentication)
+{
         WebClient webClient1 = webClientBuilder.build();
-        WebClient webClient2= WebClient.create();
         // Decode the public key
         String decodedPublicKey = URLDecoder.decode(publicKey, StandardCharsets.UTF_8);
         // Print the decoded public key
         System.out.println("Decoded public key: " + decodedPublicKey);
         GenKeyPairResponse keys = generalKeyPairRepository.findKeypairbyId(Recid);
-//    System.out.println("publickey1"+keys.getGen_public_Key().toString());
         System.out.println("privatekey1"+keys.getGen_private_Key().toString());
-//        System.out.println("privatekey2"+keys1.getGen_private_Key().toString());
-//        KeyManager.generateKeyPair();
         keyManager.initFromStringsPublickey(decodedPublicKey);
         keyManager.initFromStringsPrvkey(keys.getGen_private_Key());
         String sharedKey = keyManager.generateSharedSecret();
-
-//        URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:8083/getenc_sig")
-//                .queryParam("message", URLEncoder.encode(sharedKey, StandardCharsets.UTF_8))
-//                .build()
-//                .toUri();
-//
-//        String response = webClient2.get()
-//                .uri(uri)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
-    Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-    String response = webClient1.get()
-            .uri(builder -> {
-                UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
-                        .scheme("http")
-                        .host("ENCKEY-SERVICE")
-                        .path("/api/enckey/getenc_sig")
-                        .queryParam("message", URLEncoder.encode(sharedKey, StandardCharsets.UTF_8));
-                return uriBuilder.build().toUri();
-            })
-            .headers(httpHeaders -> httpHeaders.setBearerAuth(jwt.getTokenValue()))
-            .retrieve()
-            .bodyToMono(String.class)
-            .block();
+        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+        String response = webClient1.get()
+                .uri(builder -> {
+                    UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
+                            .scheme("http")
+                            .host("ENCKEY-SERVICE")
+                            .path("/api/enckey/getenc_sig")
+                            .queryParam("message", URLEncoder.encode(sharedKey, StandardCharsets.UTF_8));
+                    return uriBuilder.build().toUri();
+                })
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(jwt.getTokenValue()))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
 
         Map<String, Object> claims = jwt.getClaims();
         String  userId =authentication.getName();
-        EncKeyResponse encKeyresponse = new EncKeyResponse(SenderId,Recid,response);
+        String Createdat= new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
+        EncKeyResponse encKeyresponse = new EncKeyResponse(SenderId,Recid,response,Createdat);
         encKeyRepository.save(encKeyresponse);
+//        SymKeyResponse symKeyResponse = new SymKeyResponse(SenderId,Recid,true);
+//        kafkasymKeyGenerated.send("SymKeyGenerated-topic", "Gen-key-pair", symKeyResponse);
         System.out.println("Saved data to cache by "+ userId);
         System.out.println("the shared key is "+sharedKey);
         return sharedKey;
@@ -302,7 +290,17 @@ public String getsecsharedkey(@RequestParam("SenderId") String SenderId,@Request
 
 }
 
+    private boolean isKeyValid(String Createdat) throws ParseException {
+        String createdAt = Createdat;
+        String currentTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
 
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        Date createdTimeDate = formatter.parse(createdAt);
+        Date currentTimeDate = formatter.parse(currentTime);
+
+        // Return true if the time difference is less than or equal to 60,000 ms (1 minute)
+        return Math.abs(currentTimeDate.getTime() - createdTimeDate.getTime()) <= 60000;
+    }
     // key-pair CRUD handling
 
     @PostMapping("/savekeypair")
@@ -354,17 +352,40 @@ public String getsecsharedkey(@RequestParam("SenderId") String SenderId,@Request
     }
 
     @GetMapping("/Gengetkeypair/{Id}")
-    public GenKeyPairResponse findGenkeypair(@PathVariable String Id) {
-        System.out.print("This is the 7th message to retrive the keypair based on ownerid of the one who has recieved public key of the peer");
-        try {
-            GenKeyPairResponse keys = generalKeyPairRepository.findKeypairbyId(Id);
-            System.out.println("this is private " + keys.getGen_private_Key() + "this is public " + keys.getGen_public_Key());
-            return keys;
-        } catch (Exception e) {
-            // Handle exception (e.g., log it)
-            e.printStackTrace();
-            return null;
-        }
+    public GenKeyPairResponse findGenkeypair(@PathVariable String Id,Authentication authentication) throws ParseException, ExecutionException, InterruptedException {
+        System.out.print("findGenkeypair:This is message to retrive the regenerated DH keypair based on ownerid of the one who has recieved public key of the peer");
+        reGenKeyPairResponseCompletableFuture = new CompletableFuture<>();
+//        try {
+            GenKeyPairResponse keys_old = generalKeyPairRepository.findKeypairbyId(Id);
+            // check the created at and generate a new key
+            if(isKeyValid(keys_old.getCreatedat()))
+            {
+                System.out.println("this is private " + keys_old.getGen_private_Key() + "this is public " + keys_old.getGen_public_Key());
+                return keys_old;
+            }
+            else
+            {
+                Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+                Map<String, Object> claims = jwt.getClaims();
+                String userId =  authentication.getName();
+                String ownerid = (String) claims.get("Owner_ID"); // Adjust claim key if needed
+                SenRecResponse senRecResponse= new SenRecResponse(ownerid,userId);
+                kafkaloginTemplate.send("Save-reGenerate-keypair-topic", "Gen-key-pair", senRecResponse);
+                System.out.println("Waiting for new DH Key pair regeneration message from Kafka...");
+                // Wait for the Kafka listener to complete the future with the symmetric key
+                ReGenKeyPairResponse reGenKeyPairResponse = reGenKeyPairResponseCompletableFuture.get();
+                System.out.println("Generated DH Key pair: " + reGenKeyPairResponse.getGenerated());
+                GenKeyPairResponse keys_new = generalKeyPairRepository.findKeypairbyId(Id);
+                System.out.println("this is DH private_new " + keys_new.getGen_private_Key() + "this is DH public new " + keys_new.getGen_public_Key());
+                return keys_new;
+
+            }
+
+//        } catch (Exception e) {
+//            // Handle exception (e.g., log it)
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 
     @GetMapping("/GenDelkeypair/{Id}")
@@ -525,8 +546,6 @@ public String getsecsharedkey(@RequestParam("SenderId") String SenderId,@Request
     {
         return "this is example";
     }
-
-
 
 
 }
